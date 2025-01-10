@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sail&display=swap');
+
+
+body{
+    margin: 0;
+}
+header{
+    width: 100%;
+    background-color: #DDC0AC;
+    display: flex;
+}
+.icon{
+    padding: 10px;
+    width: 50px;
+    height: 40px;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    background-color: #F5EFE4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.judul{
+    font-size: 20px;
+    font-family: "Inter";
+}
+.font-biasa{
+    font-size: 16px;
+    font-family: "Inter";
+}
+.content{
+    width: 95%;
+    height: 350px;
+    padding: 10px;
+    margin-top: 40px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    gap: 15px;
+    scrollbar-width: none;
+}
+.item{
+    width: 30%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+    flex-shrink: 1;
+    align-items: flex-start;
+}
+.item table{
+    width: 100%;
+}
+.add-minus{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.add, .minus{
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid;
+}
+.add img, .minus img{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+#preOrder{
+    margin-right: 15px;
+    color: #fff;
+    padding: 10px;
+    background-color: #C5AF9C;
+    border: none;
+    border-radius: 15px;
+}
+footer{
+    padding: 10px 0;
+    margin-top: 110px;
+    width: 100%;
+    background-color: #E8D9CF;
+    display: flex;
+    justify-content: space-between;
+}
+.total{
+    margin-left: 15px;
+}
+@media ( max-width:768px ) {
+    .content{
+        justify-content: center;
+    }
+    .item{
+        width: 60%;
+        height: 100px;
+    }
+    footer{
+        margin-top: 130px;
+    }
+}
