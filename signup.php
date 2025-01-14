@@ -1,5 +1,5 @@
 <?php
-include "assets/backend/db.php";
+include "CODES/BACKEND/db.php";
 session_start();
 
 if (isset($_POST['signup'])) {
@@ -59,7 +59,7 @@ if (isset($_POST['signup'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style5.css">
+    <link rel="stylesheet" href="CODES/CSS/login-register-pages.css">
     <title>Document</title>
 </head>
 <body>

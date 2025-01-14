@@ -1,5 +1,5 @@
 <?php
-include "assets/backend/db.php";
+include "CODES/BACKEND/db.php";
 session_start();
 
 $datamakanan;
@@ -36,7 +36,7 @@ $db->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/style1.css">
+    <link rel="stylesheet" href="CODES/CSS/dashboard-styles.css">
 </head>
 <body>
     <header>
