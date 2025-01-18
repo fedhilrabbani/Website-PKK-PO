@@ -6,12 +6,12 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM user_table WHERE username = '$username'";
+    $sql = "SELECT * FROM users WHERE username = '$username'";
     $result = $db -> query($sql);
     
     if ($result -> num_rows > 0) {
         $data = $result -> fetch_assoc();
-        if (password_verify($password, $data['user_password'])) {
+        if (password_verify($password, $data['password'])) {
             $_SESSION['username'] = $data['username'];
             header('location: dashboard.php');
             exit;

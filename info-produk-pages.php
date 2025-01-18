@@ -1,34 +1,232 @@
+<?php
+include "CODES/BACKEND/db.php";
+
+if (isset($_GET['id']) && isset($_GET['type'])) {
+    $id = intval($_GET['id']);
+    $type = $_GET['type'];
+
+    if ($type === 'foods' || $type === 'drinks') {
+        $table = $type;
+
+        $sql = "SELECT * FROM $table WHERE " . ($type === 'foods' ? 'foods_id' : 'drinks_id') . " = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $produk = $result->fetch_assoc();
+
+        if ($produk) {
+            $nama = $produk['nama'];
+            $harga = $produk['harga'];
+            $deskripsi = $produk['deskripsi'];
+            $tersedia = $produk['tersedia'] ? 'Ya' : 'Tidak';
+            $url_gambar = $produk['url_gambar'];
+
+            if ($type === 'foods') {
+                $ukuran_porsi = $produk['ukuran_porsi'];
+                $tingkat_pedas = $produk['tingkat_pedas'];
+                $deskripsi_rasa = $produk['deskripsi_rasa'];
+                $deskripsi_gizi = $produk['deskripsi_gizi'];
+                $waktu_penyajian = $produk['waktu_penyajian'];
+            }
+
+            if ($type === 'drinks') {
+                $suhu = $produk['suhu'];
+                $rasa = $produk['rasa'];
+                $volume = $produk['volume'];
+                $deskripsi_gizi = $produk['deskripsi_gizi'];
+                $waktu_penyajian = $produk['waktu_penyajian'];
+            }
+        } else {
+            $error = "Produk tidak ditemukan.";
+        }
+    } else {
+        $error = "Tipe produk tidak valid.";
+    }
+} else {
+    $error = "Parameter tidak lengkap.";
+}
+
+if (isset($error)) {
+    echo "<p>Error: $error</p>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style2.css">
-    <title>Document</title>
+    <title>Informasi Jajan Yuk !</title>
+    <link rel="stylesheet" href="CODES/CSS/info-produk-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
+    <div id="container">
         <header>
-            <img src="assets/images/cart.png" alt="" class="icon">
+            <div class="kontainer-header">
+                <img class="logo" src="ASSETS/IMAGES/icon.png" alt="Logo">
+                <div class="menu-icons">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                <div class="tombol-autentikasi">
+                    <a href="#" class="tombol-masuk">Masuk</a>
+                    <a href="#" class="tombol-daftar">Daftar</a>
+                </div>
+            </div>
         </header>
-        <p class="judul">Nama Produk</p>
-        <div class="image">
-            <!-- foto produk -->
-        </div>
-        <p class="font-biasa">Deskripsi :</p>
-        <!-- <p> Deskripsi Produk </p> -->
-        <div class="info">
-            <p class="font-biasa">Harga :</p>
-            <p class="font-biasa">Rp 0000</p>
-        </div>
-        <div class="button">
-            <div class="addCart">
-                <p class="font-biasa">Add Cart</p>
+
+        <div class="produk-detail-container">
+            <div class="produk-info">
+                <div class="produk-header">
+                    <h1 class="produk-title"><?= htmlspecialchars($nama) ?></h1>
+                    <p class="produk-harga">Harga : Rp. <?= htmlspecialchars(number_format($harga, 0, ',', '.')), ',00-.' ?></p>
+                </div>
+
+                <div class="produk-gallery">
+                    <div class="produk-img-container">
+                        <img src="<?= htmlspecialchars($url_gambar) ?>" alt="<?= htmlspecialchars($nama) ?>" class="produk-main-img">
+                    </div>
+                    <div class="produk-img-thumbnails">
+                        <img src="<?= htmlspecialchars($url_gambar) ?>" alt="Thumbnail 1" class="thumbnail-img">
+                        <img src="<?= htmlspecialchars($url_gambar) ?>" alt="Thumbnail 2" class="thumbnail-img">
+                        <img src="<?= htmlspecialchars($url_gambar) ?>" alt="Thumbnail 3" class="thumbnail-img">
+                    </div>
+                </div>
+
+                <div class="produk-description">
+                    <h3>Deskripsi Produk</h3>
+                    <p><?= htmlspecialchars($deskripsi) ?></p>
+                </div>
+
+                <div class="produk-additional-info">
+                    <div class="produk-availability">
+                        <h4>Tersedia : <?= htmlspecialchars($tersedia) ?></h4>
+                    </div>
+
+                    <?php if ($type === 'foods'): ?>
+                        <div class="produk-food-info">
+                            <h4>Informasi Makanan</h4>
+                            <p><strong><i class="fas fa-utensils"></i> Ukuran Porsi :</strong> <?= htmlspecialchars($ukuran_porsi) ?></p>
+                            <p><strong><i class="fas fa-pepper-hot"></i> Tingkat Pedas :</strong> <?= htmlspecialchars($tingkat_pedas) ?></p>
+                            <p><strong><i class="fas fa-flask"></i> Rasa :</strong> <?= htmlspecialchars($deskripsi_rasa) ?></p>
+                            <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p>
+                            <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
+                        </div>
+                    <?php elseif ($type === 'drinks'): ?>
+                        <div class="produk-drink-info">
+                            <h4>Informasi Minuman</h4>
+                            <p><strong><i class="fas fa-temperature-high"></i> Suhu :</strong> <?= htmlspecialchars($suhu) ?></p>
+                            <p><strong><i class="fas fa-tint"></i> Rasa :</strong> <?= htmlspecialchars($rasa) ?></p>
+                            <p><strong><i class="fas fa-glass-whiskey"></i> Volume :</strong> <?= htmlspecialchars($volume) ?> ml</p>
+                            <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p>
+                            <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            
+                <div class="produk-reviews">
+                    <h3>Ulasan Produk</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-summary">4.5/5 Berdasarkan 150 Ulasan</p>
+                    <div class="ulasan">
+                        <div class="ulasan-item">
+                            <strong>Joko</strong>
+                            <p>“Produk sangat enak dan puas!”</p>
+                        </div>
+                        <div class="ulasan-item">
+                            <strong>Rani</strong>
+                            <p>“Rasa pedasnya pas, sangat rekomended!”</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="produk-action">
+                    <a href="carts-pages.php?id=<?= $id ?>" class="add-to-cart-btn">Tambah Ke Keranjang</a>
+                    <a href="pre-order-pages.php?id=<?= $id ?>" class="buy-now-btn">Pre Order</a>
+                </div>
             </div>
-            <div class="preOrder">
-                <p class="font-biasa">Pre Order</p>
-            </div>
         </div>
-    </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-contact">
+                    <h3>Hubungi Kami</h3>
+                    <form class="contact-form">
+                        <input type="text" placeholder="Nama" required>
+                        <input type="email" placeholder="Email" required>
+                        <textarea placeholder="Pesan" required></textarea>
+                        <button type="submit">Kirim</button>
+                    </form>
+                </div>
+
+                <div class="footer-navigation">
+                    <h3>Navigasi</h3>
+                    <ul>
+                        <li><a href="#beranda"><i class="fas fa-home"></i> Beranda</a></li>
+                        <li><a href="#tentang"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
+                        <li><a href="#"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</a></li>
+                        <li><a href="#layanan"><i class="fas fa-cogs"></i> Pelayanan</a></li>
+                        <li><a href="#"><i class="fas fa-box-open"></i> Produk</a></li>
+                        <li><a href="#katalog"><i class="fas fa-th"></i> Katalog Produk</a></li>
+                        <li><a href="#footer"><i class="fas fa-envelope"></i> Kontak</a></li>
+                        <li><a href="#"><i class="fas fa-briefcase"></i> Karir</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-info">
+                    <h3>Informasi</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Lokasi : SMKN 1 Kota Bekasi </p>
+                    <p><i class="fas fa-envelope"></i> Email : info@jajanyuk.com</p>
+                    <p><i class="fas fa-phone"></i> Telepon : ( 021 ) 123-4567</p>
+                    <p><i class="fas fa-clock"></i> Jam Operasional : Kamis 30 Januari 2025 ( 06:30 - 11:30 WIB )</p>
+                </div>
+
+                <div class="footer-social">
+                    <h3>Ikuti Kami</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-payment">
+                    <h3>Pembayaran</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-credit-card"></i> Transfer Bank</a></li>
+                        <li><a href="#"><i class="fas fa-wallet"></i> E - Monney</a></li>
+                        <li><a href="#"><i class="fas fa-money-bill-wave"></i> Cash On Delivery</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jajan Yuk. Semua Hak Cipta Dilindungi</p>
+            </div>
+        </footer>
+
+    <script src="CODES/JS/info-produk-scripts.js"></script>
 </body>
+
 </html>
+
+<?php
+$db->close();
+?>

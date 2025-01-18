@@ -1,9 +1,9 @@
 <?php
 
 $hostname = "localhost";
-$username = "root";
-$password = "";
-$database_name = "pkk_tables";
+$username = "dbpkk";
+$password = "dbprojekpkk2025?";
+$database_name = "dbpkk";
 
 $db = mysqli_connect($hostname, $username, $password, $database_name);
 
