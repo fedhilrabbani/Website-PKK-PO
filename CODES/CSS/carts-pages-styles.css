@@ -4,8 +4,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #faf3e4;
-    color: #572f10;
+    background-color: #e8f1f8;
+    color: #2c3e50;
 }
 
 header {
@@ -13,7 +13,7 @@ header {
     position: fixed;
     top: 0;
     z-index: 1000;
-    background: #572f10;
+    background: #34495e;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -43,7 +43,7 @@ header {
     display: flex;
     align-items: center;
     padding: 8px 16px;
-    color: #faf3e4;
+    color: #ecf0f1;
     border-radius: 5px;
     background-color: transparent;
     text-decoration: none;
@@ -53,7 +53,7 @@ header {
 
 .menu-link i {
     font-size: 18px;
-    color: #faf3e4;
+    color: #ecf0f1;
 }
 
 .cart-container {
@@ -62,7 +62,7 @@ header {
     top: 50px;
     margin: 80px auto;
     padding: 30px;
-    background: linear-gradient(145deg, #fdf7ed, #f3e9d8);
+    background: linear-gradient(145deg, #d4e6f1, #a9cce3);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -73,20 +73,20 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
-    border-bottom: 3px solid #d8bca4;
+    border-bottom: 3px solid #95a5a6;
 }
 
 .cart-header h2 {
     font-size: 28px;
     font-weight: 700;
-    color: #a65c30;
+    color: #2c3e50;
     letter-spacing: 1px;
 }
 
 .cart-header p {
     font-size: 16px;
     font-weight: 400;
-    color: #6a3f22;
+    color: #7f8c8d;
     text-transform: capitalize;
 }
 
@@ -96,12 +96,12 @@ header {
     align-items: center;
     gap: 20px;
     padding: 20px 0;
-    border-bottom: 1px solid #e0c3aa;
+    border-bottom: 1px solid #bdc3c7;
     transition: background 0.3s;
 }
 
 .cart-item:hover {
-    background: rgba(245, 236, 217, 0.5);
+    background: rgba(220, 240, 255, 0.5);
 }
 
 .product-image img {
@@ -110,7 +110,7 @@ header {
     height: 150px;
     object-fit: cover;
     border-radius: 12px;
-    border: 2px solid #d8bca4;
+    border: 2px solid #95a5a6;
     transition: transform 0.3s;
 }
 
@@ -121,14 +121,14 @@ header {
 .product-details h3 {
     font-size: 20px;
     font-weight: 700;
-    color: #6a3f22;
+    color: #34495e;
     margin-left: 60px;
     letter-spacing: 0.5px;
 }
 
 .product-details p {
     font-size: 14px;
-    color: #b4753f;
+    color: #5d6d7e;
     margin-left: 60px;
     font-style: italic;
 }
@@ -146,8 +146,8 @@ header {
 .quantity-control button {
     width: 40px;
     height: 40px;
-    background: #a65c30;
-    color: #faf3e4;
+    background: #2c3e50;
+    color: #ecf0f1;
     font-size: 18px;
     font-weight: bold;
     border: none;
@@ -159,26 +159,26 @@ header {
 
 .quantity-control button:hover {
     transform: scale(1.1);
-    background: #6a3f22;
+    background: #1abc9c;
 }
 
 .quantity-input {
     width: 60px;
     text-align: center;
-    border: 2px solid #e0c3aa;
+    border: 2px solid #bdc3c7;
     border-radius: 6px;
     padding: 6px;
     font-size: 16px;
     font-weight: 500;
-    color: #6a3f22;
-    background: #fdf7ed;
+    color: #34495e;
+    background: #d4e6f1;
 }
 
 .product-price,
 .product-subtotal {
     font-size: 18px;
     font-weight: 600;
-    color: #b4753f;
+    color: #5d6d7e;
     text-align: center;
 }
 
@@ -190,8 +190,8 @@ header {
 }
 
 .product-actions .remove-btn {
-    background: #e0c3aa;
-    color: #6a3f22;
+    background: #bdc3c7;
+    color: #34495e;
     padding: 10px 15px;
     border: none;
     font-size: 14px;
@@ -202,14 +202,14 @@ header {
 }
 
 .product-actions .remove-btn:hover {
-    background: #a65c30;
-    color: #faf3e4;
+    background: #2c3e50;
+    color: #ecf0f1;
     transform: translateY(-2px);
 }
 
 .product-actions label {
     font-size: 14px;
-    color: #6a3f22;
+    color: #34495e;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -217,13 +217,13 @@ header {
 }
 
 .product-actions input[type="checkbox"] {
-    accent-color: #a65c30;
+    accent-color: #1abc9c;
 }
 
 .ringkasan-pesanan {
     margin-top: 40px;
     padding: 25px;
-    background: linear-gradient(145deg, #eddcc8, #dcc4aa);
+    background: linear-gradient(145deg, #d6eaf8, #aed6f1);
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -232,7 +232,7 @@ header {
 .ringkasan-pesanan h3 {
     font-size: 22px;
     font-weight: 700;
-    color: #6a3f22;
+    color: #34495e;
     margin-bottom: 20px;
     text-align: center;
     letter-spacing: 1px;
@@ -246,13 +246,13 @@ header {
 .ringkasan-pesanan table td {
     font-size: 16px;
     padding: 10px 0;
-    color: #6a3f22;
+    color: #34495e;
 }
 
 .ringkasan-pesanan table th {
     font-size: 18px;
     font-weight: 700;
-    color: #a65c30;
+    color: #2c3e50;
     padding: 12px 0;
 }
 
@@ -263,8 +263,8 @@ header {
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #faf3e4;
-    background: linear-gradient(145deg, #a65c30, #6a3f22);
+    color: #ecf0f1;
+    background: linear-gradient(145deg, #2c3e50, #34495e);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -274,7 +274,7 @@ header {
 }
 
 .checkout-btn:hover {
-    background: linear-gradient(145deg, #6a3f22, #a65c30);
+    background: linear-gradient(145deg, #34495e, #2c3e50);
     transform: translateY(-3px);
 }
 
@@ -284,11 +284,11 @@ footer {
     margin-top: 30px;
     align-items: center;
     padding: 20px;
-    background: #faf3e4;
-    border-top: 2px solid #DDC0AC;
+    background: #d4e6f1;
+    border-top: 2px solid #bdc3c7;
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px 10px 0 0;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 footer .total {
@@ -296,20 +296,20 @@ footer .total {
     align-items: center;
     gap: 15px;
     font-size: 16px;
-    color: #572f10;
+    color: #2c3e50;
 }
 
 footer .total input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    accent-color: #a65922;
+    accent-color: #1abc9c;
     cursor: pointer;
 }
 
 footer .total label {
     font-size: 16px;
     font-weight: 600;
-    color: #572f10;
+    color: #1e3a5f;
     cursor: pointer;
     margin: 0;
 }
@@ -317,7 +317,7 @@ footer .total label {
 footer .total table {
     border-collapse: collapse;
     font-size: 16px;
-    color: #572f10;
+    color: #1e3a5f;
 }
 
 footer .total table td {
@@ -326,8 +326,8 @@ footer .total table td {
 }
 
 footer button#preOrder {
-    background: #a65922;
-    color: #faf3e4;
+    background: #2a5783;
+    color: #e6f7ff;
     padding: 15px 25px;
     font-size: 18px;
     font-weight: 700;
@@ -338,6 +338,6 @@ footer button#preOrder {
 }
 
 footer button#preOrder:hover {
-    background: #572f10;
+    background: #18344d;
     transform: translateY(-2px);
 }

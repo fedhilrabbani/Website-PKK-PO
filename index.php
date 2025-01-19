@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="CODES/CSS/login-register-pages.css">
-    <title>Document</title>
+    <title>Sign - In Jajan Yuk !</title>
 </head>
 
 <body>

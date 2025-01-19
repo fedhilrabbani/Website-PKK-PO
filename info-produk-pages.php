@@ -116,7 +116,7 @@ if (isset($error)) {
                             <p><strong><i class="fas fa-utensils"></i> Ukuran Porsi :</strong> <?= htmlspecialchars($ukuran_porsi) ?></p>
                             <p><strong><i class="fas fa-pepper-hot"></i> Tingkat Pedas :</strong> <?= htmlspecialchars($tingkat_pedas) ?></p>
                             <p><strong><i class="fas fa-flask"></i> Rasa :</strong> <?= htmlspecialchars($deskripsi_rasa) ?></p>
-                            <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p>
+                            <!-- <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p> -->
                             <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
                         </div>
                     <?php elseif ($type === 'drinks'): ?>
@@ -125,32 +125,10 @@ if (isset($error)) {
                             <p><strong><i class="fas fa-temperature-high"></i> Suhu :</strong> <?= htmlspecialchars($suhu) ?></p>
                             <p><strong><i class="fas fa-tint"></i> Rasa :</strong> <?= htmlspecialchars($rasa) ?></p>
                             <p><strong><i class="fas fa-glass-whiskey"></i> Volume :</strong> <?= htmlspecialchars($volume) ?> ml</p>
-                            <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p>
+                            <!-- <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p> -->
                             <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
                         </div>
                     <?php endif; ?>
-                </div>
-
-                <div class="produk-reviews">
-                    <h3>Ulasan Produk</h3>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </div>
-                    <p class="review-summary">4.5/5 Berdasarkan 150 Ulasan</p>
-                    <div class="ulasan">
-                        <div class="ulasan-item">
-                            <strong>Joko</strong>
-                            <p>“Produk sangat enak dan puas!”</p>
-                        </div>
-                        <div class="ulasan-item">
-                            <strong>Rani</strong>
-                            <p>“Rasa pedasnya pas, sangat rekomended!”</p>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="produk-action">

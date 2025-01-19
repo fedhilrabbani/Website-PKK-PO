@@ -2,8 +2,8 @@ body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    background-color: #faf3e4;
-    color: #572f10;
+    background-color: #e6f7ff;
+    color: #1e3a5f;
     overflow-x: hidden;
 }
 
@@ -23,7 +23,7 @@ section {
 h2 {
     margin-bottom: 20px;
     font-size: 2rem;
-    color: #572f10;
+    color: #1e3a5f;
 }
 
 @keyframes fadeIn {
@@ -44,7 +44,7 @@ section {
 }
 
 section:nth-of-type(even) {
-    background-color: #f0e4d7;
+    background-color: #d9ecf2;
 }
 
 header {
@@ -52,7 +52,7 @@ header {
     position: fixed;
     top: 0;
     z-index: 1000;
-    background: #572f10;
+    background: #1e3a5f;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -76,28 +76,28 @@ header {
 }
 
 .nav-desktop .menu li a {
-    color: #faf3e4;
+    color: #e6f7ff;
     padding: 8px 16px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .nav-desktop .menu li a:hover {
-    background-color: #a65922;
+    background-color: #2a5783;
 }
 
 .tombol-autentikasi a {
     margin-left: 10px;
     padding: 8px 16px;
-    border: 1px solid #faf3e4;
-    color: #faf3e4;
+    border: 1px solid #e6f7ff;
+    color: #e6f7ff;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .tombol-autentikasi a:hover {
-    background-color: #a65922;
-    border-color: #a65922;
+    background-color: #2a5783;
+    border-color: #2a5783;
 }
 
 .burger-menu {
@@ -113,7 +113,7 @@ header {
     display: block;
     width: 25px;
     height: 3px;
-    background: #faf3e4;
+    background: #e6f7ff;
 }
 
 .sidebar {
@@ -123,7 +123,7 @@ header {
     width: 80%;
     max-width: 300px;
     height: 100%;
-    background: #572f10;
+    background: #1e3a5f;
     padding: 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
     transition: left 0.3s ease;
@@ -140,7 +140,7 @@ header {
     font-size: 1.5rem;
     background: none;
     border: none;
-    color: #faf3e4;
+    color: #e6f7ff;
     cursor: pointer;
 }
 
@@ -152,14 +152,14 @@ header {
 }
 
 .sidebar .menu li a {
-    color: #faf3e4;
+    color: #e6f7ff;
     padding: 8px 16px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .sidebar .menu li a:hover {
-    background-color: #a65922;
+    background-color: #2a5783;
 }
 
 @media (max-width: 768px) {
@@ -207,7 +207,7 @@ header {
     font-family: 'Poppins', sans-serif;
     padding: 10px 20px;
     color: white;
-    background: #572f10;;
+    background: #0066cc;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -216,7 +216,7 @@ header {
 }
 
 .cta-button:hover {
-    background: #a65922;
+    background: #004f99;
 }
 
 .dots {
@@ -238,12 +238,12 @@ header {
 }
 
 .dots div.active {
-    background: #572f10;;
+    background: #0066cc;
 }
 
 .tentang {
     padding: 80px 20px;
-    background: linear-gradient(135deg, #f7f7f7, #eaeaea);
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
 }
 
 .container-tentang {
@@ -276,7 +276,7 @@ header {
 }
 
 .section-title span {
-    color: #a65922;
+    color: #0066cc;
 }
 
 .section-description {
@@ -284,6 +284,7 @@ header {
     color: #555;
     line-height: 1.8;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .feature-list {
@@ -307,12 +308,12 @@ header {
 
 .feature-list li i {
     font-size: 1.25rem;
-    color: #572f10;
+    color: #0066cc;
     flex-shrink: 0;
 }
 
 .cta-button {
-    background: #572f10;
+    background: #0066cc;
     color: #fff;
     padding: 12px 20px;
     border: none;
@@ -323,11 +324,11 @@ header {
 }
 
 .cta-button:hover {
-    background: #a65922;
+    background: #004f99;
 }
 
 .tentang-image {
-    flex: 1 1 40%;
+    flex: 1 1 30%;
     text-align: center;
 }
 
@@ -340,7 +341,7 @@ header {
 
 .layanan {
     padding: 80px 20px;
-    background: linear-gradient(135deg, #eaf2f1, #f5f7fa);
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
     color: #333;
 }
 
@@ -359,12 +360,13 @@ header {
 }
 
 .section-title span {
-    color: #a65922;
+    color: #0066cc;
 }
 
 .section-description {
     position: relative;
-    right: 40px;
+    left: 0px;
+    margin-right: 50px;
     font-size: 1.125rem;
     text-align: center;
     padding: 20px;
@@ -396,7 +398,7 @@ header {
 }
 
 .icon-container {
-    background: #572f10;
+    background: #0066cc;
     color: #fff;
     border-radius: 50%;
     width: 60px;
@@ -419,7 +421,6 @@ header {
     right: 0px;
     font-size: 1rem;
     color: #555;
-
     text-align: center;
 }
 
@@ -431,6 +432,10 @@ header {
     .layanan-card {
         width: 80%;
         margin-bottom: 20px;
+    }
+    .section-description {
+        position: relative;
+        left: 0px;
     }
 }
 
@@ -454,7 +459,7 @@ header {
     width: 80px;
     height: 4px;
     margin: 10px auto 0;
-    background: linear-gradient(to right, #a65922, #ff9800);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     border-radius: 2px;
 }
 
@@ -464,7 +469,7 @@ header {
     gap: 20px;
     padding: 20px 0;
     scrollbar-width: thin;
-    scrollbar-color: #a65922 #f4f4f9;
+    scrollbar-color: #0066cc #f4f4f9;
 }
 
 .promo-scroll::-webkit-scrollbar {
@@ -472,7 +477,7 @@ header {
 }
 
 .promo-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #a65922, #ff9800);
+    background: linear-gradient(to bottom, #0066cc, #00b0ff);
     border-radius: 5px;
 }
 
@@ -510,7 +515,7 @@ header {
 
 .promo-content h3 {
     font-size: 1.5rem;
-    color: #572f10;
+    color: #0066cc;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -519,7 +524,7 @@ header {
 
 .promo-content h3 i {
     font-size: 1.2rem;
-    color: #a65922;
+    color: #00b0ff;
     animation: pulse 1.5s infinite alternate;
 }
 
@@ -536,11 +541,10 @@ header {
 .promo-content p {
     font-size: 1rem;
     color: #34495e;
-    
 }
 
 .promo-content:hover h3 {
-    color: #a65922;
+    color: #00b0ff;
 }
 
 @media (max-width: 768px) {
@@ -597,7 +601,7 @@ header {
     display: block;
     width: 60px;
     height: 4px;
-    background: linear-gradient(to right, #a65922, #572f10);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     margin: 10px auto 0;
     border-radius: 2px;
 }
@@ -609,14 +613,14 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #a65922;
+    color: #0066cc;
 }
 
 .produk-populer .kategori-title::before {
     content: "\f06d";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    color: #a65922;
+    color: #0066cc;
     font-size: 1.5rem;
     animation: flame 1.5s infinite alternate;
 }
@@ -637,7 +641,7 @@ header {
     gap: 20px;
     padding: 20px;
     scrollbar-width: thin;
-    scrollbar-color: #572f10 #f4f4f9;
+    scrollbar-color: #0066cc #f4f4f9;
     flex-wrap: nowrap;
 }
 
@@ -646,7 +650,7 @@ header {
 }
 
 .produk-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #572f10, #a65922);
+    background: linear-gradient(to bottom, #0066cc, #00b0ff);
     border-radius: 5px;
 }
 
@@ -656,7 +660,7 @@ header {
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-    border: 5px #572f10 solid;
+    border: 5px #0066cc solid;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     position: relative;
 }
@@ -672,7 +676,7 @@ header {
     position: absolute;
     top: 10px;
     left: 10px;
-    background: linear-gradient(to right, #ff5722, #ff9800);
+    background: linear-gradient(to right, #4caf50, #8bc34a);
     color: #ffffff;
     padding: 5px 12px;
     border-radius: 15px;
@@ -714,7 +718,7 @@ header {
 
 .produk-info .harga {
     font-size: 1.3rem;
-    color: #a65922;
+    color: #0066cc;
     margin: 10px 0;
     font-weight: bold;
 }
@@ -741,26 +745,25 @@ header {
     margin-top: 10px;
     text-align: center;
     display: block;
-    background: linear-gradient(to right, #a65922, #572f10);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     color: #ffffff;
     padding: 10px;
     border-radius: 25px;
     font-size: 1rem;
     text-decoration: none;
     transition: background 0.3s ease, transform 0.3s ease;
-    text-transform: uppercase;
     font-weight: bold;
 }
 
 .cek-produk:hover {
-    background: linear-gradient(to right, #a65922, #572f10);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     transform: translateY(-3px);
 }
 
 .kategori-produk .kategori-title {
     font-size: 1.6rem;
     text-align: left;
-    color: #a65922;
+    color: #0066cc;
     margin-bottom: 15px;
 }
 
@@ -770,7 +773,7 @@ header {
 }
 
 footer {
-    background: linear-gradient(to right, #a65922, #572f10);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     color: #f4f4f9;
     padding: 50px 20px;
     font-family: 'Poppins', sans-serif;
@@ -889,7 +892,7 @@ footer .footer-bottom p {
 .contact-form {
     position: absolute;
     left: 20px;
-    background-color: #f0e4d7;
+    background-color: #e1f5fe;
     padding: 20px;
     border-radius: 20px;
     display: flex;
@@ -903,10 +906,10 @@ footer .footer-bottom p {
 .contact-form textarea {
     min-width: 230px;
     padding: 6px;
-    border: 1px solid #a65922;
+    border: 1px solid #00b0ff;
     border-radius: 5px;
-    background: #f0e4d7;
-    color: #572f10;
+    background: #e1f5fe;
+    color: #0066cc;
     font-size: 0.8rem;
     font-family: 'Poppins', sans-serif;
 }
@@ -918,10 +921,10 @@ footer .footer-bottom p {
 
 .contact-form button {
     padding: 6px 12px;
-    background: linear-gradient(to right, #a65922, #572f10);
+    background: linear-gradient(to right, #0066cc, #00b0ff);
     border: none;
     border-radius: 4px;
-    color: #f0e4d7;
+    color: #f4f4f9;
     font-size: 0.8rem;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
@@ -931,6 +934,6 @@ footer .footer-bottom p {
 
 .contact-form button:hover {
     transform: scale(1.05);
-    background: linear-gradient(to right, #572f10, #a65922);
+    background: linear-gradient(to right, #00b0ff, #0066cc);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }

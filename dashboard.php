@@ -133,83 +133,16 @@ $db->close();
                         Selamat datang di <strong>Jajan Yuk!</strong>, platform inovatif yang dirancang khusus untuk mempermudah Anda menyediakan makanan dan minuman berkualitas untuk berbagai acara, terutama <strong>Market Day</strong>.
                         Kami hadir untuk menghadirkan pengalaman yang praktis, menyenangkan, dan penuh pilihan lezat, mulai dari jajanan tradisional hingga makanan kekinian yang sedang tren.
                     </p>
-                    <ul class="feature-list">
+                    <!-- <ul class="feature-list">
                         <li><i class="fas fa-check-circle"></i> <strong>Kualitas Terbaik :</strong> Produk makanan dan minuman yang terjamin kebersihan dan kesegarannya.</li>
                         <li><i class="fas fa-box-open"></i> <strong>Pilihan Beragam :</strong> Berbagai jenis jajanan dari pelaku usaha lokal yang dapat disesuaikan dengan tema acara Anda.</li>
                         <li><i class="fas fa-shopping-cart"></i> <strong>Pemesanan Mudah :</strong> Antarmuka sederhana untuk membantu Anda memesan dengan cepat.</li>
                         <li><i class="fas fa-tags"></i> <strong>Harga Terjangkau :</strong> Nikmati penawaran terbaik tanpa mengurangi kualitas.</li>
-                    </ul>
+                    </ul> -->
                     <button class="cta-button">Pelajari Lebih Lanjut</button>
                 </div>
                 <div class="tentang-image">
                     <img src="ASSETS/IMAGES/bg.jpg" alt="Tentang Jajan Yuk !">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="layanan" class="layanan">
-        <div class="container-layanan">
-            <h2 class="section-title">Layanan <span>Terbaik Kami</span></h2>
-            <p class="section-description">
-                Di <strong>Jajan Yuk!</strong>, kami berkomitmen untuk memberikan layanan terbaik kepada pelanggan. Dengan berbagai fitur unggulan, kami memastikan Anda mendapatkan pengalaman belanja yang tak terlupakan, terutama saat acara Market Day. Kami hadir untuk memenuhi kebutuhan Anda dengan layanan yang cepat, aman, dan terpercaya.
-            </p>
-            <div class="layanan-cards">
-                <div class="layanan-card">
-                    <div class="icon-container">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <h3>Pengiriman Cepat</h3>
-                    <p>Pesanan Anda akan tiba dengan aman dan tepat waktu. Kami menjamin pengiriman cepat agar Anda bisa menikmati jajanan pilihan Anda segera.</p>
-                </div>
-                <div class="layanan-card">
-                    <div class="icon-container">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Customer Support 24/7</h3>
-                    <p>Tim kami siap membantu Anda kapan saja. Tidak perlu khawatir, kami selalu siap memberikan solusi terbaik untuk setiap kebutuhan Anda.</p>
-                </div>
-                <div class="layanan-card">
-                    <div class="icon-container">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>Produk Berkualitas</h3>
-                    <p>Kami hanya menawarkan produk terbaik yang dijamin kualitasnya, sehingga Anda bisa merasa aman dan puas dengan setiap pilihan yang Anda buat.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section id="promo" class="promo">
-        <h2>Promo Spesial</h2>
-        <div class="promo-scroll">
-            <div class="promo-item">
-                <div class="promo-image" style="background-image: url('img/promo1.jpg');"></div>
-                <div class="promo-content">
-                    <h3><i class="fas fa-tags"></i> Diskon 50%</h3>
-                    <p>Untuk pembelian di atas Rp 50.000</p>
-                </div>
-            </div>
-            <div class="promo-item">
-                <div class="promo-image" style="background-image: url('img/promo2.jpg');"></div>
-                <div class="promo-content">
-                    <h3><i class="fas fa-gift"></i> Beli 1 Gratis 1</h3>
-                    <p>Jasuke Keju, berlaku hingga akhir bulan!</p>
-                </div>
-            </div>
-            <div class="promo-item">
-                <div class="promo-image" style="background-image: url('img/promo3.jpg');"></div>
-                <div class="promo-content">
-                    <h3><i class="fas fa-shipping-fast"></i> Gratis Ongkir</h3>
-                    <p>Setiap pembelian produk minuman di atas Rp 30.000</p>
-                </div>
-            </div>
-            <div class="promo-item">
-                <div class="promo-image" style="background-image: url('img/promo4.jpg');"></div>
-                <div class="promo-content">
-                    <h3><i class="fas fa-percent"></i> Diskon 20%</h3>
-                    <p>Untuk produk minuman tertentu. Cek lebih lanjut!</p>
                 </div>
             </div>
         </div>
