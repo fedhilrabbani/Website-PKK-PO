@@ -45,6 +45,7 @@ $db->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <title>Dashboard Jajan Yuk !</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -60,15 +61,15 @@ $db->close();
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#tentang">Tentang</a></li>
                     <li><a href="#layanan">Layanan</a></li>
-                    <li><a href="#popular">Popular</a></li>
                     <li><a href="#promo">Promo</a></li>
+                    <li><a href="#produk">Popular</a></li>
                     <li><a href="#produk">Produk</a></li>
                     <li><a href="#kontak">Kontak</a></li>
                 </ul>
             </nav>
             <div class="tombol-autentikasi">
-                <a href="#" class="tombol-masuk">Masuk</a>
-                <a href="#" class="tombol-daftar">Daftar</a>
+                <a href="index.php" class="tombol-masuk">Masuk</a>
+                <a href="signup.php" class="tombol-daftar">Daftar</a>
             </div>
             <button class="burger-menu" aria-label="Menu">
                 <span></span>
@@ -88,10 +89,10 @@ $db->close();
                 <li><a href="#beranda">Beranda</a></li>
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#layanan">Layanan</a></li>
-                <li><a href="#popular">Popular</a></li>
                 <li><a href="#promo">Promo</a></li>
+                <li><a href=".produk-populer">Popular</a></li>
                 <li><a href="#produk">Produk</a></li>
-                <li><a href="#kontak">Kontak</a></li>
+                <li><a href="footer">Kontak</a></li>
             </ul>
         </nav>
     </aside>
@@ -214,7 +215,6 @@ $db->close();
         </div>
     </section>
 
-    <!-- Katalog Produk -->
     <section id="produk" class="produk">
         <div class="container">
             <h2 class="section-title">Katalog Produk</h2>

@@ -61,6 +61,7 @@ if (isset($error)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informasi Jajan Yuk !</title>
     <link rel="stylesheet" href="CODES/CSS/info-produk-styles.css">
+    <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
@@ -77,10 +78,6 @@ if (isset($error)) {
                     <a href="#" class="menu-link">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
-                </div>
-                <div class="tombol-autentikasi">
-                    <a href="#" class="tombol-masuk">Masuk</a>
-                    <a href="#" class="tombol-daftar">Daftar</a>
                 </div>
             </div>
         </header>
@@ -133,7 +130,7 @@ if (isset($error)) {
                         </div>
                     <?php endif; ?>
                 </div>
-            
+
                 <div class="produk-reviews">
                     <h3>Ulasan Produk</h3>
                     <div class="rating">
@@ -162,67 +159,7 @@ if (isset($error)) {
                 </div>
             </div>
         </div>
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-contact">
-                    <h3>Hubungi Kami</h3>
-                    <form class="contact-form">
-                        <input type="text" placeholder="Nama" required>
-                        <input type="email" placeholder="Email" required>
-                        <textarea placeholder="Pesan" required></textarea>
-                        <button type="submit">Kirim</button>
-                    </form>
-                </div>
-
-                <div class="footer-navigation">
-                    <h3>Navigasi</h3>
-                    <ul>
-                        <li><a href="#beranda"><i class="fas fa-home"></i> Beranda</a></li>
-                        <li><a href="#tentang"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
-                        <li><a href="#"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</a></li>
-                        <li><a href="#layanan"><i class="fas fa-cogs"></i> Pelayanan</a></li>
-                        <li><a href="#"><i class="fas fa-box-open"></i> Produk</a></li>
-                        <li><a href="#katalog"><i class="fas fa-th"></i> Katalog Produk</a></li>
-                        <li><a href="#footer"><i class="fas fa-envelope"></i> Kontak</a></li>
-                        <li><a href="#"><i class="fas fa-briefcase"></i> Karir</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-info">
-                    <h3>Informasi</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Lokasi : SMKN 1 Kota Bekasi </p>
-                    <p><i class="fas fa-envelope"></i> Email : info@jajanyuk.com</p>
-                    <p><i class="fas fa-phone"></i> Telepon : ( 021 ) 123-4567</p>
-                    <p><i class="fas fa-clock"></i> Jam Operasional : Kamis 30 Januari 2025 ( 06:30 - 11:30 WIB )</p>
-                </div>
-
-                <div class="footer-social">
-                    <h3>Ikuti Kami</h3>
-                    <ul>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-payment">
-                    <h3>Pembayaran</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-credit-card"></i> Transfer Bank</a></li>
-                        <li><a href="#"><i class="fas fa-wallet"></i> E - Monney</a></li>
-                        <li><a href="#"><i class="fas fa-money-bill-wave"></i> Cash On Delivery</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Jajan Yuk. Semua Hak Cipta Dilindungi</p>
-            </div>
-        </footer>
-
-    <script src="CODES/JS/info-produk-scripts.js"></script>
+        <script src="CODES/JS/info-produk-scripts.js"></script>
 </body>
 
 </html>
