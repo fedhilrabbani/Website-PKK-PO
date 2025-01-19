@@ -65,33 +65,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="CODES/CSS/login-register-pages.css">
-    <title>Document</title>
+    <title>Sign - Up Marketopia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="CODES/CSS/sign-up-pages-styles.css">
 </head>
 
 <body>
     <div class="container">
-        <header>
-            <img src="assets/images/icon.png" alt="" class="icon">
-        </header>
-        <form action="signup.php" method="POST">
-            <input type="text" placeholder="Username" name="username" id="username">
-            <input type="text" placeholder="Kelas" name="kelas">
-            <input type="email" placeholder="Email" name="emailuser">
-            <input type="password" placeholder="Password" name="password" id="password">
-            <input type="password" placeholder="Confirm Password" id="checkpassword" onclick="checkPassword()">
-            <button type="submit" class="button" name="signup" onclick="confirmPassword()">Login</button>
-        </form>
+        <div class="welcome-container">
+            <h1>Selamat Datang di Platform Kami !</h1>
+            <p>Bergabunglah Sebelum Melakukan Transaksi Pembelian Produk Makanan & Minuman Di Platform Kami</p>
+        </div>
+        <div class="form-container">
+            <h2>Mulai Bergabung ?</h2>
+            <form action="signup.php" method="POST">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" name="username" id="username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-graduation-cap"></i>
+                    <input type="text" placeholder="Kelas" name="kelas" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" name="emailuser" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" name="password" id="password" required onclick="checkPassword()">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-check-circle"></i>
+                    <input type="password" placeholder="Konfirmasi Password" id="checkpassword" required onclick="confirmPassword()">
+                </div>
+                <button type="submit" class="button" name="signup">Daftar</button>
+            </form>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="CODES/JS/login-register-scripts.js"></script>
 </body>
 

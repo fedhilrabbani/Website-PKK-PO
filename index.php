@@ -39,25 +39,33 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="CODES/CSS/login-register-pages.css">
+    <link rel="stylesheet" href="CODES/CSS/sign-in-pages-styles.css">
     <title>Sign - In Jajan Yuk !</title>
 </head>
 
 <body>
     <div class="container">
-        <header>
-            <img src="assets/images/icon.png" alt="" class="icon">
-        </header>
-        <form action="index.php" method="POST">
-            <input type="text" placeholder="Username" name="username" id="username">
-            <input type="password" placeholder="Password" name="password" id="password">
-            <button type="submit" class="button" name="login" onclick="">Login</button>
-            <a href="signup.php" class="font-biasa">Don't have account?</a>
-        </form>
+        <div class="form-container">
+            <h2>Bergabung</h2>
+            <form action="index.php" method="POST">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" name="username" id="username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" name="password" id="password" required>
+                </div>
+                <button type="submit" class="button" name="login" onclick="">Masuk</button>
+                <a href="signup.php" class="font-biasa">Belum Memiliki Akun?</a>
+            </form>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="CODES/JS/login-register-scripts.js"></script>
 </body>
 
 </html>

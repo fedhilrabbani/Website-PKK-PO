@@ -72,11 +72,14 @@ if (isset($error)) {
             <div class="kontainer-header">
                 <img class="logo" src="ASSETS/IMAGES/icon.png" alt="Logo">
                 <div class="menu-icons">
-                    <a href="#" class="menu-link">
+                    <a href="dashboard.php" class="menu-link">
                         <i class="fas fa-home"></i>
                     </a>
-                    <a href="#" class="menu-link">
+                    <a href="carts-pages.php" class="menu-link">
                         <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <a href="pre-order-pages.php" class="menu-link">
+                        <i class="fas fa-check-circle"></i>
                     </a>
                 </div>
             </div>
