@@ -5,6 +5,27 @@ session_start();
 $datamakanan = [];
 $dataminuman = [];
 
+$imagepath = [
+    1 => 'assets/images-product/Mie Roll.jpg',
+    2 => 'assets/images-product/Sawi Gulung.jpg',
+    3 => 'assets/images-product/Keripik Pisang Lumer.jpg',
+    4 => 'assets/images-product/sushi.jpg',
+    5 => 'assets/images-product/Donat.jpg',
+
+];
+
+foreach ($imagepath as $id => $path) {
+    $imagename = basename($path); 
+    $sql = "UPDATE foods 
+            SET 
+                nama_gambar = CASE WHEN foods_id = ? THEN ? END,
+                gambar = CASE WHEN foods_id = ? THEN ? END
+            WHERE foods_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("isisi", $id, $imagename, $id, $path, $id);
+    $stmt->execute();
+}
+
 $sql = "SELECT * FROM foods";
 $result = $db->query($sql);
 if ($result->num_rows > 0) {
@@ -13,8 +34,8 @@ if ($result->num_rows > 0) {
             'nama' => $row['nama'],
             'harga' => $row['harga'],
             'id' => $row['foods_id'],
-            'url_gambar' => $row['url_gambar'],
-            'deskripsi' => $row['deskripsi'],
+            'url_gambar' => $row['gambar'],
+            'nama_gambar' => $row['nama_gambar'],
         ];
     }
     $_SESSION['list_makanan'] = $datamakanan;

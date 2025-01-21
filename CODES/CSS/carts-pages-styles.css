@@ -90,6 +90,13 @@ header {
     text-transform: capitalize;
 }
 
+.cart-item-list{
+    height: 600px;
+    align-items: center ;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
 .cart-item {
     display: grid;
     grid-template-columns: 120px 2fr 1fr 1fr 1fr;
@@ -184,9 +191,9 @@ header {
 
 .product-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    /*justify-content: space-between;
+    align-items: center; */
+    gap: 100px;
 }
 
 .product-actions .remove-btn {

@@ -1,6 +1,8 @@
 <?php
 include "CODES/BACKEND/db.php";
 
+$message;
+
 if (isset($_GET['id']) && isset($_GET['type'])) {
     $id = intval($_GET['id']);
     $type = $_GET['type'];
@@ -19,24 +21,30 @@ if (isset($_GET['id']) && isset($_GET['type'])) {
             $nama = $produk['nama'];
             $harga = $produk['harga'];
             $deskripsi = $produk['deskripsi'];
-            $tersedia = $produk['tersedia'] ? 'Ya' : 'Tidak';
-            $url_gambar = $produk['url_gambar'];
+            $stock = $produk['quantity'];
+            $url_gambar = $produk['gambar'];
 
-            if ($type === 'foods') {
-                $ukuran_porsi = $produk['ukuran_porsi'];
-                $tingkat_pedas = $produk['tingkat_pedas'];
-                $deskripsi_rasa = $produk['deskripsi_rasa'];
-                $deskripsi_gizi = $produk['deskripsi_gizi'];
-                $waktu_penyajian = $produk['waktu_penyajian'];
+            if($stock < 0) {
+                $message = "Habis";
+            } else {
+                $message = "Tersedia";
             }
 
-            if ($type === 'drinks') {
-                $suhu = $produk['suhu'];
-                $rasa = $produk['rasa'];
-                $volume = $produk['volume'];
-                $deskripsi_gizi = $produk['deskripsi_gizi'];
-                $waktu_penyajian = $produk['waktu_penyajian'];
-            }
+            // if ($type === 'foods') {
+            //     $ukuran_porsi = $produk['ukuran_porsi'];
+            //     $tingkat_pedas = $produk['tingkat_pedas'];
+            //     $deskripsi_rasa = $produk['deskripsi_rasa'];
+            //     $deskripsi_gizi = $produk['deskripsi_gizi'];
+            //     $waktu_penyajian = $produk['waktu_penyajian'];
+            // }
+
+            // if ($type === 'drinks') {
+            //     $suhu = $produk['suhu'];
+            //     $rasa = $produk['rasa'];
+            //     $volume = $produk['volume'];
+            //     $deskripsi_gizi = $produk['deskripsi_gizi'];
+            //     $waktu_penyajian = $produk['waktu_penyajian'];
+            // }
         } else {
             $error = "Produk tidak ditemukan.";
         }
@@ -51,6 +59,25 @@ if (isset($error)) {
     echo "<p>Error: $error</p>";
     exit;
 }
+
+// if (isset($_GET['id'])) {
+//     $id = intval($_GET['id']);
+
+//     $sql = "SELECT * FROM foods WHERE foods_id = ?";
+//     $stmt = $db->prepare($sql);
+//     $stmt->bind_param("i",$id);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+//     $produk = $result->fetch_assoc();
+
+//     if ($produk) {
+//         $sql_cart = "INSERT INTO cart (id_product, nama_product, harga) VALUES (?, ?, ?)";
+//         $stmt_cart = $db->prepare($sql_cart);
+//         $stmt_cart->bind_param("iss", $id, $produk['nama'], $produk['harga']);
+//         $stmt_cart->execute();
+//         header("Location: carts-pages.php");
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +137,7 @@ if (isset($error)) {
 
                 <div class="produk-additional-info">
                     <div class="produk-availability">
-                        <h4>Tersedia : <?= htmlspecialchars($tersedia) ?></h4>
+                        <h4>Tersedia : <?= htmlspecialchars($message) ?></h4>
                     </div>
 
                     <?php if ($type === 'foods'): ?>
@@ -135,8 +162,8 @@ if (isset($error)) {
                 </div>
 
                 <div class="produk-action">
-                    <a href="carts-pages.php?id=<?= $id ?>" class="add-to-cart-btn">Tambah Ke Keranjang</a>
-                    <a href="pre-order-pages.php?id=<?= $id ?>" class="buy-now-btn">Pre Order</a>
+                    <a href="carts-pages.php?idproduk=<?= $id ?>">Tambah Ke Keranjang</a>
+                    <a href="" class="buy-now-btn">Pre Order</a>
                 </div>
             </div>
         </div>

@@ -54,29 +54,30 @@ header {
     color: #f0f8ff;
 }
 
-.produk-detail-container {
+/* .produk-detail-container {
     display: flex;
     justify-content: center;
     padding: 40px;
     background-color: #DCE7F4;
-}
+} */
 
 .produk-detail-container {
-    position: absolute;
+    /* position: absolute;
     top: 90px;
-    left: 0%;
+    left: 0%; */
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    width: 100vw;
+    width: 100%;
     overflow-x: hidden;
 }
 
 .produk-info {
-    position: relative;
+    /* position: relative;
     top: 0px;
-    right: 5px;
+    right: 5px; */
+    margin-top: 100px;
     background-color: #f0f8ff;
     border: groove 5px #003366;
     border-radius: 20px;
