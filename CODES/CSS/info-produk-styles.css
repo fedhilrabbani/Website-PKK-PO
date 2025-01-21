@@ -250,6 +250,7 @@ header {
     transform: translateY(1px);
 }
 
+
 @media (max-width: 768px) {
     .produk-info {
         padding: 20px;
