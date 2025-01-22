@@ -6,15 +6,34 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = $db->query($sql);
+    // Gunakan prepared statement untuk menghindari SQL injection
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("s", $username); // "s" untuk string
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $data = $result->fetch_assoc();
+
+        // Verifikasi password
         if (password_verify($password, $data['password'])) {
-            $_SESSION['username'] = $data['username'];
-            header('location: dashboard.php');
+            // Simpan data ke sesi
+            $_SESSION['user_id'] = $data['id']; // Simpan ID pengguna untuk konsistensi
+            $_SESSION['username'] = $data['username']; // Simpan nama pengguna jika perlu
+            header('location: dashboard.php'); // Redirect ke dashboard
             exit;
+        } else {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Password salah!',
+                        showConfirmButton: true,
+                    });
+                });
+            </script>";
         }
     } else {
         echo "<script>
@@ -22,16 +41,15 @@ if (isset($_POST['login'])) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Username atau Password tidak ditemukan!',
+                    text: 'Username tidak ditemukan!',
                     showConfirmButton: true,
                 });
             });
         </script>";
     }
 }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
