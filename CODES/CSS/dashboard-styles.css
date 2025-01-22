@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -89,7 +93,7 @@ header {
 
 .tombol-autentikasi a {
     margin-left: 10px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     border: 1px solid #e6f7ff;
     color: #e6f7ff;
     border-radius: 5px;
@@ -161,16 +165,6 @@ header {
 
 .sidebar .menu li a:hover {
     background-color: #2a5783;
-}
-
-@media (max-width: 768px) {
-    .nav-desktop {
-        display: none;
-    }
-
-    .burger-menu {
-        display: flex;
-    }
 }
 
 .slider-container {
@@ -425,21 +419,6 @@ header {
     text-align: center;
 }
 
-@media (max-width: 768px) {
-    .layanan-cards {
-        flex-direction: column;
-    }
-
-    .layanan-card {
-        width: 80%;
-        margin-bottom: 20px;
-    }
-    .section-description {
-        position: relative;
-        left: 0px;
-    }
-}
-
 .promo {
     position: relative;
     left: 20px;
@@ -548,37 +527,6 @@ header {
     color: #00b0ff;
 }
 
-@media (max-width: 768px) {
-    .promo {
-        padding: 30px 20px;
-        left: 0;
-    }
-
-    .promo h2 {
-        font-size: 1.8rem;
-    }
-
-    .promo-scroll {
-        gap: 10px;
-    }
-
-    .promo-item {
-        flex: 0 0 240px;
-    }
-
-    .promo-image {
-        height: 150px;
-    }
-
-    .promo-content h3 {
-        font-size: 1.2rem;
-    }
-
-    .promo-content p {
-        font-size: 0.9rem;
-    }
-}
-
 .produk {
     padding: 40px 20px;
 }
@@ -639,7 +587,7 @@ header {
 .produk-scroll {
     display: flex;
     overflow-x: auto;
-    gap: 20px;
+    gap: 15px;
     padding: 20px;
     scrollbar-width: thin;
     scrollbar-color: #0066cc #f4f4f9;
@@ -657,7 +605,11 @@ header {
 
 .produk-item {
     flex: 0 0 300px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
     background: #ffffff;
+    min-height: 220px;
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
@@ -666,11 +618,17 @@ header {
     position: relative;
 }
 
+.deskripsi {
+    margin-bottom: -10px;
+}
+
 .gambar-produk {
-    height: 200px;
+    height: 260px;
     background-size: cover;
     background-position: center;
     border-radius: 20px;
+    object-fit: cover;
+    margin-bottom: -10px;
 }
 
 .badge {
@@ -703,24 +661,23 @@ header {
 }
 
 .produk-info {
-    padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 220px;
+    height: 80%;
 }
 
 .produk-info h3 {
     font-size: 1.2rem;
     color: #34495e;
-    margin-bottom: 10px;
+    margin-bottom: -3px;
     text-transform: capitalize;
 }
 
-.produk-info .harga {
+.harga {
     font-size: 1.3rem;
     color: #0066cc;
-    margin: 10px 0;
+    margin: 0;
     font-weight: bold;
 }
 
@@ -743,8 +700,12 @@ header {
 }
 
 .cek-produk {
-    margin-top: 10px;
+    margin: 0px 5px 10px 5px;
     text-align: center;
+    position: absolute;
+    align-self: center;
+    bottom: 0;
+    width: 80%;
     display: block;
     background: linear-gradient(to right, #0066cc, #00b0ff);
     color: #ffffff;
@@ -793,70 +754,6 @@ footer {
 .footer-social,
 .footer-payment {
     flex: 1 1 100px;
-}
-
-@media (max-width: 768px) {
-    .footer {
-        height: auto;
-    }
-
-    .footer-contact {
-        position: relative;
-        left: 20px;
-        margin-bottom: 20px;
-        padding-left: 10px;
-        text-align: center;
-        width: 100%;
-    }
-
-    .footer-navigation,
-    .footer-info {
-        margin-bottom: 20px;
-        padding-left: 10px;
-        text-align: left;
-        width: 45%;
-        box-sizing: border-box;
-    }
-
-    .footer-navigation {
-        float: left;
-        position: relative;
-        top: 350px;
-    }
-
-    .footer-info {
-        float: right;
-        position: relative;
-        bottom: 130px;
-    }
-
-    .footer-social,
-    .footer-payment {
-        margin-bottom: 20px;
-        padding-left: 10px;
-        text-align: left;
-        width: 45%;
-        box-sizing: border-box;
-    }
-
-    .footer-social {
-        float: left;
-        position: relative;
-        top: 330px;
-    }
-
-    .footer-payment {
-        float: right;
-        position: relative;
-        bottom: 150px;
-    }
-
-    .footer-bottom {
-        position: relative;
-        bottom: 100px;
-        margin-bottom: 0%;
-        font-size: 14px;
-    }
 }
 
 footer h3 {
@@ -937,4 +834,95 @@ footer .footer-bottom p {
     transform: scale(1.05);
     background: linear-gradient(to right, #00b0ff, #0066cc);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 600px){
+    .gambar-produk{
+        height: 135px;
+        margin-bottom: 3px;
+        scale: 1.15;
+    }
+    .produk-item{
+        max-width: 40vw;
+        padding: 3px;
+    }
+    .harga{
+        font-size: 0.85rem;
+    }
+    .deskripsi{
+        margin-top: 0;
+        margin-bottom: -5px;
+        font-size: 0.65rem;
+    }
+    .produk-info{
+        padding: 10px 13px;
+    }
+    .produk-info h3{
+        font-size: 1rem;
+    }
+    .cek-produk {
+        margin-top: 0px;
+        padding: 3px;
+        border-radius: 25px;
+        font-size: 0.7rem;
+    }
+    .tentang-image{
+        scale: 0.8;
+    }
+    .section-title{
+        font-size: 1.7em;
+    }
+    .section-description {
+        font-size: 0.8rem;
+        text-align: center;
+        margin: auto;
+    }
+    .tentang-content{
+        flex-direction: column;
+    }
+
+    .layanan-cards {
+        flex-direction: column;
+    }
+
+    .layanan-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .promo {
+        padding: 30px 20px;
+        left: 0;
+    }
+
+    .promo h2 {
+        font-size: 1.8rem;
+    }
+
+    .promo-scroll {
+        gap: 10px;
+    }
+
+    .promo-item {
+        flex: 0 0 240px;
+    }
+
+    .promo-image {
+        height: 150px;
+    }
+
+    .promo-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .promo-content p {
+        font-size: 0.9rem;
+    }
+    .nav-desktop {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
 }

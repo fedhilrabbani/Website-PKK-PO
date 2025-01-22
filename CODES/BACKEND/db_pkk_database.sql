@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 21 Jan 2025 pada 14.11
+-- Waktu pembuatan: 22 Jan 2025 pada 12.11
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.12
 
@@ -33,17 +33,9 @@ CREATE TABLE `cart` (
   `nama_product` varchar(255) DEFAULT NULL,
   `harga` float DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
-  `nama_gambar` varchar(255) DEFAULT NULL
+  `nama_gambar` varchar(255) DEFAULT NULL,
+  `quantity_total` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
---
--- Dumping data untuk tabel `cart`
---
-
-INSERT INTO `cart` (`id_cart`, `id_product`, `nama_product`, `harga`, `gambar`, `nama_gambar`) VALUES
-(31, 3, 'Keripik Pisang Lumer', 5000, 'assets/images-product/Keripik Pisang Lumer.jpg', 'Keripik Pisang Lumer.jpg'),
-(32, 5, 'Donat Coklat', 4000, 'assets/images-product/Donat.jpg', 'Donat.jpg'),
-(33, 2, 'Sawi Gulung', 10000, 'assets/images-product/Sawi Gulung.jpg', 'Sawi Gulung.jpg');
 
 -- --------------------------------------------------------
 
@@ -97,7 +89,13 @@ INSERT INTO `foods` (`foods_id`, `nama`, `deskripsi`, `harga`, `quantity`, `gamb
 (2, 'Sawi Gulung', NULL, 10000.00, 20, 'assets/images-product/Sawi Gulung.jpg', 'Sawi Gulung.jpg'),
 (3, 'Keripik Pisang Lumer', NULL, 5000.00, 12, 'assets/images-product/Keripik Pisang Lumer.jpg', 'Keripik Pisang Lumer.jpg'),
 (4, 'Sushi', NULL, 7000.00, 20, 'assets/images-product/sushi.jpg', 'sushi.jpg'),
-(5, 'Donat Coklat', NULL, 4000.00, 20, 'assets/images-product/Donat.jpg', 'Donat.jpg');
+(5, 'Donat Coklat', NULL, 4000.00, 20, 'assets/images-product/Donat.jpg', 'Donat.jpg'),
+(6, 'Salad Buah', NULL, 15000.00, 12, 'assets/images-product/Salad Buah.jpg', 'Salad Buah.jpg'),
+(7, 'Snack Kriukkk-Basreng Pedas', NULL, 5000.00, 15, 'assets/images-product/Basreng.jpg', 'Basreng.jpg'),
+(8, 'Snack Kriukkk-Seblak Kering', NULL, 5000.00, 15, 'assets/images-product/Seblak Kering.jpg', 'Seblak Kering.jpg'),
+(9, 'Baso Mercon', NULL, 10000.00, 25, 'assets/images-product/Baso Mercon.jpg', 'Baso Mercon.jpg'),
+(10, 'Risol', NULL, 2500.00, 40, 'assets/images-product/Risol.jpg', 'Risol.jpg'),
+(11, 'Banana Roll', NULL, 7000.00, 10, 'assets/images-product/Banana Roll.jpg', 'Banana Roll.jpg');
 
 -- --------------------------------------------------------
 
@@ -121,7 +119,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `kelas`, `created_at`, `updated_at`) VALUES
 (1, 'Hirto Eveen Tamamekeng', '$2y$10$GhizpNm/mwBnEdR3g.N3xOz.muBbKYrGgrp.AmdPjK7tBBLyoMosS', 'hirtoetamamekeng@smkn1kotabekasi.sch.id', '11 RPL B', '2025-01-14 13:29:38', '2025-01-14 13:29:38'),
-(2, 'Ruan Mei', 'hirtoetamamekeng@smkn1kotabekasi.sch.id', '$2y$10$u6IUYStW0gIi4/g56Wr0bOtOuGz9x/F6lX.evUgpGXdbmVnjgJwcW', '11 IPA C', '2025-01-14 13:43:06', '2025-01-14 13:43:06');
+(2, 'Ruan Mei', 'hirtoetamamekeng@smkn1kotabekasi.sch.id', '$2y$10$u6IUYStW0gIi4/g56Wr0bOtOuGz9x/F6lX.evUgpGXdbmVnjgJwcW', '11 IPA C', '2025-01-14 13:43:06', '2025-01-14 13:43:06'),
+(3, 'aaa', 'akaka@g.com', '$2y$10$OUdEIobP5sjraWcUn.gbeOyaV9VCF72Mfs2VnLxW/tDc6z.C5b6Yi', '11 IPA C', '2025-01-22 00:21:27', '2025-01-22 00:21:27'),
+(4, 'Ruan Meia', 'a@g.com', '$2y$10$lPGdAllfhfr0spAe/rAlauEt/4AK5wgeW.WjtUBTLinZq6Ii6vf06', 'aaaa', '2025-01-22 00:23:29', '2025-01-22 00:23:29'),
+(5, 'Mupdi', 'nmufidibrahim@gmail.com', '$2y$10$.XEezWBOR6oekclgo2V70O1SQjZk58yuTZJgojwvHoZBSm9VLbap2', 'XI PPLG B', '2025-01-22 00:30:55', '2025-01-22 00:30:55'),
+(6, 'Handikach', 'handika@k.com', '$2y$10$QsUWLRuvz55P2om/dFfs5.D.E/rpPH65h6Gp9WQDZE.ppNdijxVz6', 'XI PPLG B', '2025-01-22 00:35:53', '2025-01-22 00:35:53'),
+(7, 'michael', 'carlosimbolon23@gmail.com', '$2y$10$lhgMsg.4vzK5H2icb5ZdfeCr4VxplsZf6bNaU1kBzmL5QeF7XHNnC', 'XI RPL B', '2025-01-22 00:38:17', '2025-01-22 00:38:17');
 
 --
 -- Indexes for dumped tables
@@ -160,19 +163,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT untuk tabel `foods`
 --
 ALTER TABLE `foods`
-  MODIFY `foods_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `foods_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
