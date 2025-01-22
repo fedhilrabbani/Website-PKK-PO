@@ -83,7 +83,7 @@ $db->close();
     <header>
         <div class="kontainer-header">
             <img class="logo" src="ASSETS/IMAGES/icon.png">
-            <nav class="tombol-autentikasi">    
+            <nav class="tombol-navigasi">    
                 <a href="#beranda">Beranda</a>
                 <a href="#tentang">Tentang</a>
                 <a href="#produk">Produk</a>
@@ -96,7 +96,7 @@ $db->close();
             <img class="logo" src="ASSETS/IMAGES/icon.png">
             <button class="close-sidebar" aria-label="Close Sidebar">&times;</button>
         </div>
-        <nav>
+        <!-- <nav>
             <ul class="menu">
                 <li><a href="#beranda">Beranda</a></li>
                 <li><a href="#tentang">Tentang</a></li>
@@ -106,7 +106,7 @@ $db->close();
                 <li><a href="#produk">Produk</a></li>
                 <li><a href="footer">Kontak</a></li>
             </ul>
-        </nav>
+        </nav> -->
     </aside>
 
     <div class="slider-container" id="beranda">
