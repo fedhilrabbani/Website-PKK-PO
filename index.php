@@ -18,32 +18,34 @@ if (isset($_POST['login'])) {
         }
     } else {
         echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Username atau Password tidak ditemukan!',
-                    showConfirmButton: true,
-                });
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Username atau Password tidak ditemukan!',
+                showConfirmButton: true,
             });
-        </script>";
+            });
+            </script>";
+        }
     }
-}
-
-
-?>
+    
+    
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="CODES/CSS/sign-in-pages-styles.css">
-    <title>Sign - In Jajan Yuk !</title>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
+        <link rel="stylesheet" href="CODES/CSS/sign-in-pages-styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="CODES/JS/login-register-scripts.js"></script>
+        <title>Sign - In Jajan Yuk !</title>
 </head>
 
 <body>
@@ -64,8 +66,6 @@ if (isset($_POST['login'])) {
             </form>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="CODES/JS/login-register-scripts.js"></script>
 </body>
 
 </html>

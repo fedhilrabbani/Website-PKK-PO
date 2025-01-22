@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="CODES/CSS/pre-order-pages-styles.css">
+    <script src="CODES/JS/pre-order-pages-scripts.js" defer></script>
 </head>
 
 <body>
@@ -148,7 +149,6 @@
             <p>&copy; 2025 Jajan Yuk! All Rights Reserved.</p>
         </footer>
     </div>
-    <script src="CODES/JS/pre-order-pages-scripts.js" defer></script>
 </body>
 
 </html>
