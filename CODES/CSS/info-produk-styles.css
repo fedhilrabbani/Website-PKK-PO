@@ -133,6 +133,47 @@ header {
     justify-content: center;
 }
 
+.product-quantity {
+    text-align: center;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity-control button {
+    width: 40px;
+    height: 40px;
+    background: #2c3e50;
+    color: #ecf0f1;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background 0.3s;
+}
+
+.quantity-control button:hover {
+    transform: scale(1.1);
+    background: #1abc9c;
+}
+
+.quantity-input {
+    width: 60px;
+    text-align: center;
+    border: 2px solid #bdc3c7;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #34495e;
+    background: #d4e6f1;
+}
+
 .thumbnail-img {
     width: 80px;
     height: 80px;

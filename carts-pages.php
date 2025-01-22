@@ -1,48 +1,72 @@
 <?php
-// include "CODES/BACKEND/db.php";
+include "CODES/BACKEND/db.php";
 
-// if (isset($_GET['idproduk'])) {
-//     $id = intval($_GET['idproduk']);
+$jumlahprodukcart;
 
-//     $sql = "SELECT * FROM foods WHERE foods_id = ?";
-//     $stmt = $db->prepare($sql);
-//     $stmt->bind_param("i",$id);
-//     $stmt->execute();
-//     $result = $stmt->get_result();
-//     $produk = $result->fetch_assoc();
+if (isset($_GET['idproduk'])) {
+    $id = intval($_GET['idproduk']);
 
-//     if ($produk) {
-//         $sql_check = "SELECT * FROM cart WHERE id_product = ?";
-//         $stmt_check = $db->prepare($sql_check);
-//         $stmt_check->bind_param("i", $id);
-//         $stmt_check->execute();
-//         $result_check = $stmt_check->get_result();
+    $sql = "SELECT * FROM foods WHERE foods_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i",$id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $produk = $result->fetch_assoc();
 
-//         if ($result_check->num_rows > 0) {
-//             echo "Produk sudah ada di keranjang.";
-//         } else {
-//             $sql_cart = "INSERT INTO cart (id_product, nama_product, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?)";
-//             $stmt_cart = $db->prepare($sql_cart);
-//             $stmt_cart->bind_param("issss", $id, $produk['nama'], $produk['harga'], $produk['gambar'], $produk['nama_gambar']);
-//             $stmt_cart->execute();
-//         }
-//     }
-// }
+    if ($produk) {
+        $sql_check = "SELECT * FROM cart WHERE id_product = ?";
+        $stmt_check = $db->prepare($sql_check);
+        $stmt_check->bind_param("i", $id);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
 
-// $sql2 = "SELECT * FROM cart";
-// $result2 = $db->query($sql2);
-// if ($result2->num_rows > 0) {
-//     while ($row2 = $result2->fetch_assoc()) {
-//         $dataproduk[] = [
-//             'nama' => $row2['nama_product'],
-//             'harga' => $row2['harga'],
-//             // 'id' => $row2['drinks_id'],
-//             'url_gambar' => $row2['gambar'],
-//             'nama_gambar' => $row2['nama_gambar'],
-//         ];
-//     }
-//     //$_SESSION['list_minuman'] = $dataminuman;
-// }
+        if ($result_check->num_rows > 0) {
+            // echo "Produk sudah ada di keranjang.";
+        } else {
+            $sql_cart = "INSERT INTO cart (id_product, nama_product, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?)";
+            $stmt_cart = $db->prepare($sql_cart);
+            $stmt_cart->bind_param("issss", $id, $produk['nama'], $produk['harga'], $produk['gambar'], $produk['nama_gambar']);
+            $stmt_cart->execute();
+        }
+    }
+}
+
+$sql2 = "SELECT * FROM cart";
+$result2 = $db->query($sql2);
+if ($result2->num_rows > 0) {
+    while ($row2 = $result2->fetch_assoc()) {
+        $dataproduk[] = [
+            'id' => $row2['id_product'],
+            'nama' => $row2['nama_product'],
+            'harga' => $row2['harga'],
+            // 'id' => $row2['drinks_id'],
+            'url_gambar' => $row2['gambar'],
+            'nama_gambar' => $row2['nama_gambar'],
+        ];
+    }
+    //$_SESSION['list_minuman'] = $dataminuman;
+}
+$sqljumlah = "SELECT COUNT(id_cart) AS id FROM cart";
+$resultjumlah = $db->query($sqljumlah);
+
+if ($resultjumlah->num_rows > 0) {
+    $row = $resultjumlah->fetch_assoc();
+    $jumlahprodukcart = $row['id']; // Simpan jumlah ID ke dalam variabel
+} else {
+    $jumlahprodukcart = 0; // Jika tabel kosong, jumlah ID adalah 0
+}
+
+if (isset($_GET['iddelete'])) {
+    $id_delete = intval($_GET['iddelete']);
+    $sqldelete = "DELETE FROM cart WHERE id_product = ?";
+    $stmt_delete = $db->prepare($sqldelete);
+    $stmt_delete->bind_param("i", $id_delete);
+    $stmt_delete->execute();
+    $stmt_delete->close();
+    
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 ?>
 
@@ -54,6 +78,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CODES/CSS/carts-pages-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="CODES/JS/carts-pages.js"></script>
     <title>Keranjang Jajan Yuk !</title>
 </head>
 
@@ -63,7 +88,7 @@
             <div class="kontainer-header">
                 <img class="logo" src="ASSETS/IMAGES/icon.png" alt="Logo">
                 <div class="menu-icons">
-                    <a href="#" class="menu-link">
+                    <a href="dashboard.php" class="menu-link">
                         <i class="fas fa-home"></i>
                     </a>
                     <a href="#" class="menu-link">
@@ -75,7 +100,7 @@
         <div class="cart-container">
             <div class="cart-header">
                 <h2>Keranjang</h2>
-                <p>Total Item : <span id="totalItems">5</span></p>
+                <p>Total Item : <?=$jumlahprodukcart?><span id="totalItems"></span></p>
             </div>
 
             <div class="cart-item-list">
@@ -95,13 +120,6 @@
                             <p class="deskripsi-gizi">Deskripsi Gizi : [Deskripsi Gizi]</p>
                             <p class="waktu-penyajian">Waktu Penyajian : [Waktu Penyajian]</p>
                         </div>
-                        <div class="product-quantity">
-                            <div class="quantity-control">
-                                <button class="minus-btn" data-id="1">-</button>
-                                <input type="number" value="2" class="quantity-input" data-id="1">
-                                <button class="plus-btn" data-id="1">+</button>
-                            </div>
-                        </div>
                         <div class="product-price">
                             <p>Rp. <span class="unit-price"><?php echo number_format($produk['harga'], 2, ',', '.') . '-.'; ?>
                             </span></p>
@@ -110,7 +128,7 @@
                             <p>Rp <span class="subtotal-price"><?php echo number_format(100000, 2, ',', '.'), '-.'; ?></span></p>
                         </div>
                         <div class="product-actions">
-                            <button class="remove-btn" data-id="1">Hapus</button>
+                            <a href="carts-pages.php?iddelete=<?=$produk['id']?>"><button class="remove-btn" data-id="1">Hapus</button></a>
                             <label>
                                 <input type="checkbox" class="wishlist-checkbox" data-id="1"> Simpan ke Wishlist
                             </label>
@@ -131,13 +149,6 @@
                         <p class="deskripsi-rasa">Deskripsi Rasa : [Deskripsi Rasa]</p>
                         <p class="deskripsi-gizi">Deskripsi Gizi : [Deskripsi Gizi]</p>
                         <p class="waktu-penyajian">Waktu Penyajian : [Waktu Penyajian]</p>
-                    </div>
-                    <div class="product-quantity">
-                        <div class="quantity-control">
-                            <button class="minus-btn" data-id="2">-</button>
-                            <input type="number" value="1" class="quantity-input" data-id="2">
-                            <button class="plus-btn" data-id="2">+</button>
-                        </div>
                     </div>
                     <div class="product-price">
                         <p>Rp. <span class="unit-price"><?php echo number_format(75000, 2, ',', '.'), '-.'; ?></span></p>
@@ -192,7 +203,6 @@
             </footer>
         </div>
     </div>
-    <script src="CODES/JS/carts-pages.js"></script>
 </body>
 
 </html>
