@@ -88,11 +88,11 @@ $db->close();
                 <ul class="menu">
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="#layanan">Layanan</a></li>
+                    <!-- <li><a href="#layanan">Layanan</a></li>
                     <li><a href="#promo">Promo</a></li>
-                    <li><a href="#produk">Popular</a></li>
+                    <li><a href="#produk">Popular</a></li> -->
                     <li><a href="#produk">Produk</a></li>
-                    <li><a href="#kontak">Kontak</a></li>
+                    <!-- <li><a href="#kontak">Kontak</a></li> -->
                 </ul>
             </nav>
             <div class="tombol-autentikasi">
