@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CODES/CSS/sign-up-pages-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="CODES/JS/login-register-scripts.js"></script>
 </head>
 
 <body>
@@ -101,18 +103,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" name="password" id="password" required onclick="checkPassword()">
+                    <input type="password" placeholder="Password" name="password" id="password" >
                 </div>
                 <div class="input-group">
                     <i class="fas fa-check-circle"></i>
-                    <input type="password" placeholder="Konfirmasi Password" id="checkpassword" required onclick="confirmPassword()">
+                    <input type="password" placeholder="Konfirmasi Password" id="checkpassword" required oninput="checkPassword()">
                 </div>
-                <button type="submit" class="button" name="signup">Daftar</button>
+                <button type="submit" class="button" name="signup" required onclick="confirmPassword()">Daftar</button>
             </form>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="CODES/JS/login-register-scripts.js"></script>
 </body>
 
 </html>

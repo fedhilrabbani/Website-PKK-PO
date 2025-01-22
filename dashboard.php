@@ -11,6 +11,12 @@ $imagepath = [
     3 => 'assets/images-product/Keripik Pisang Lumer.jpg',
     4 => 'assets/images-product/sushi.jpg',
     5 => 'assets/images-product/Donat.jpg',
+    6 => 'assets/images-product/Salad Buah.jpg',
+    7 => 'assets/images-product/Basreng.jpg',
+    8 => 'assets/images-product/Seblak Kering.jpg',
+    9 => 'assets/images-product/Baso Mercon.jpg',
+    10 => 'assets/images-product/Risol.jpg',
+    11 => 'assets/images-product/Banana Roll.jpg',
 
 ];
 
@@ -71,6 +77,7 @@ $db->close();
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CODES/CSS/dashboard-styles.css">
+    <script src="CODES/JS/dashboard-scripts.js"></script>
 </head>
 
 <body>
@@ -81,11 +88,11 @@ $db->close();
                 <ul class="menu">
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="#layanan">Layanan</a></li>
+                    <!-- <li><a href="#layanan">Layanan</a></li>
                     <li><a href="#promo">Promo</a></li>
-                    <li><a href="#produk">Popular</a></li>
+                    <li><a href="#produk">Popular</a></li> -->
                     <li><a href="#produk">Produk</a></li>
-                    <li><a href="#kontak">Kontak</a></li>
+                    <!-- <li><a href="#kontak">Kontak</a></li> -->
                 </ul>
             </nav>
             <div class="tombol-autentikasi">
@@ -214,13 +221,13 @@ $db->close();
                                 <div class="gambar-produk" style="background-image: url('<?= htmlspecialchars($makanan['url_gambar']) ?>');"></div>
                                 <h3><?= htmlspecialchars($makanan['nama']) ?></h3>
                                 <p class="harga">Rp. <?= number_format($makanan['harga'], 0, ',', '.') . ',00-.' ?></p>
-                                <div class="rating">
+                                <!-- <div class="rating">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="far fa-star"></i>
-                                </div>
+                                </div> -->
                                 <p class="deskripsi"><?= htmlspecialchars($makanan['deskripsi']) ?></p>
                                 <a href="info-produk-pages.php?id=<?= $makanan['id'] ?>&type=foods" class="cek-produk">Lihat Detail</a>
                             </div>
@@ -355,7 +362,6 @@ $db->close();
             }
         });
     </script>
-    <script src="CODES/JS/dashboard-scripts.js"></script>
 </body>
 
 </html>

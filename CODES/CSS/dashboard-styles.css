@@ -58,7 +58,7 @@ header {
 
 .kontainer-header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     padding: 10px 20px;
 }
@@ -73,6 +73,7 @@ header {
     list-style: none;
     display: flex;
     gap: 20px;
+    left: 100px;
 }
 
 .nav-desktop .menu li a {

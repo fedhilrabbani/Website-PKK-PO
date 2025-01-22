@@ -91,6 +91,7 @@ if (isset($error)) {
     <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="CODES/JS/info-produk-scripts.js"></script>
 </head>
 
 <body>
@@ -160,14 +161,20 @@ if (isset($error)) {
                         </div>
                     <?php endif; ?>
                 </div>
+                <div class="product-quantity">
+                        <form class="quantity-control" action="carts-pages.php" method="">
+                            <button class="minus-btn" data-id="2">-</button>
+                            <input type="number" value="1" class="quantity-input" data-id="2">
+                            <button class="plus-btn" data-id="2" name="plusbtn">+</button>
+                        </form>
+                    </div>
 
                 <div class="produk-action">
-                    <a href="carts-pages.php?idproduk=<?= $id ?>">Tambah Ke Keranjang</a>
+                    <a href="carts-pages.php?idproduk=<?= $id ?>" class="add-to-cart-btn">Tambah Ke Keranjang</a>
                     <a href="" class="buy-now-btn">Pre Order</a>
                 </div>
             </div>
         </div>
-        <script src="CODES/JS/info-produk-scripts.js"></script>
 </body>
 
 </html>

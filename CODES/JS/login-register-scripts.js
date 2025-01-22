@@ -10,7 +10,7 @@ function checkNotempty () {
             title: "Masukkan semua data!",
             showConfirmButton: false,
             timer: 1500
-          });
+        });
     }
 }
 
@@ -22,7 +22,15 @@ function checkPassword () {
             icon: "error",
             title: "Password tidak boleh kurang dari 8!",
             showConfirmButton: true,
-          });
+        });
+    }
+
+    if (password.value == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Isi dulu kocak passwordnya !",
+            showConfirmButton: true,
+        });
     }
 }
 
@@ -40,5 +48,12 @@ function confirmPassword () {
             showConfirmButton: false,
             timer: 1500
           });
+    }
+    if (password.value.length <8 || confirmPassword.value.length <9) {
+        Swal.fire({
+            icon: "error",
+            title: "Password tidak boleh kurang dari 8!",
+            showConfirmButton: true,
+        });
     }
 }
