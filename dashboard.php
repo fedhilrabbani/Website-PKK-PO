@@ -78,32 +78,16 @@ $db->close();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CODES/CSS/dashboard-styles.css">
     <script src="CODES/JS/dashboard-scripts.js"></script>
-</head>
-
+</head>d
 <body>
     <header>
         <div class="kontainer-header">
             <img class="logo" src="ASSETS/IMAGES/icon.png">
-            <nav class="nav-desktop">
-                <ul class="menu">
-                    <li><a href="#beranda">Beranda</a></li>
-                    <li><a href="#tentang">Tentang</a></li>
-                    <!-- <li><a href="#layanan">Layanan</a></li>
-                    <li><a href="#promo">Promo</a></li>
-                    <li><a href="#produk">Popular</a></li> -->
-                    <li><a href="#produk">Produk</a></li>
-                    <!-- <li><a href="#kontak">Kontak</a></li> -->
-                </ul>
+            <nav class="tombol-navigasi">    
+                <a href="#beranda">Beranda</a>
+                <a href="#tentang">Tentang</a>
+                <a href="#produk">Produk</a>
             </nav>
-            <div class="tombol-autentikasi">
-                <a href="index.php" class="tombol-masuk">Masuk</a>
-                <a href="signup.php" class="tombol-daftar">Daftar</a>
-            </div>
-            <button class="burger-menu" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
     </header>
 
@@ -112,7 +96,7 @@ $db->close();
             <img class="logo" src="ASSETS/IMAGES/icon.png">
             <button class="close-sidebar" aria-label="Close Sidebar">&times;</button>
         </div>
-        <nav>
+        <!-- <nav>
             <ul class="menu">
                 <li><a href="#beranda">Beranda</a></li>
                 <li><a href="#tentang">Tentang</a></li>
@@ -122,30 +106,30 @@ $db->close();
                 <li><a href="#produk">Produk</a></li>
                 <li><a href="footer">Kontak</a></li>
             </ul>
-        </nav>
+        </nav> -->
     </aside>
 
-    <div class="slider-container">
+    <div class="slider-container" id="beranda">
         <div class="slider">
             <div class="slide" style="background-image: url('ASSETS/IMAGES/bg.jpg');">
                 <div class="slide-content">
                     <h1>Diskon Besar Akhir Bulan</h1>
                     <p>Dapatkan penawaran terbaik hanya untuk Anda ! Belanja sekarang.</p>
-                    <button class="cta-button">Belanja Sekarang</button>
+                    <a href="#produk"><button class="cta-button">Belanja Sekarang</button></a>
                 </div>
             </div>
             <div class="slide" style="background-image: url('ASSETS/IMAGES/bg.jpg');">
                 <div class="slide-content">
                     <h1>Produk Baru !</h1>
                     <p>Koleksi terbaru telah hadir. Jangan sampai kehabisan !</p>
-                    <button class="cta-button">Lihat Koleksi</button>
+                    <a href="#produk"><button class="cta-button">Lihat Koleksi</button></a>
                 </div>
             </div>
             <div class="slide" style="background-image: url('ASSETS/IMAGES/bg.jpg');">
                 <div class="slide-content">
                     <h1>Produk Terlaris</h1>
                     <p>Belanja produk favorit Anda dengan harga spesial.</p>
-                    <button class="cta-button">Lihat Produk</button>
+                    <a href="#produk"><button class="cta-button">Lihat Produk</button></a>
                 </div>
             </div>
         </div>
@@ -161,13 +145,6 @@ $db->close();
                         Selamat datang di <strong>Jajan Yuk!</strong>, platform inovatif yang dirancang khusus untuk mempermudah Anda menyediakan makanan dan minuman berkualitas untuk berbagai acara, terutama <strong>Market Day</strong>.
                         Kami hadir untuk menghadirkan pengalaman yang praktis, menyenangkan, dan penuh pilihan lezat, mulai dari jajanan tradisional hingga makanan kekinian yang sedang tren.
                     </p>
-                    <!-- <ul class="feature-list">
-                        <li><i class="fas fa-check-circle"></i> <strong>Kualitas Terbaik :</strong> Produk makanan dan minuman yang terjamin kebersihan dan kesegarannya.</li>
-                        <li><i class="fas fa-box-open"></i> <strong>Pilihan Beragam :</strong> Berbagai jenis jajanan dari pelaku usaha lokal yang dapat disesuaikan dengan tema acara Anda.</li>
-                        <li><i class="fas fa-shopping-cart"></i> <strong>Pemesanan Mudah :</strong> Antarmuka sederhana untuk membantu Anda memesan dengan cepat.</li>
-                        <li><i class="fas fa-tags"></i> <strong>Harga Terjangkau :</strong> Nikmati penawaran terbaik tanpa mengurangi kualitas.</li>
-                    </ul> -->
-                    <button class="cta-button">Pelajari Lebih Lanjut</button>
                 </div>
                 <div class="tentang-image">
                     <img src="ASSETS/IMAGES/bg.jpg" alt="Tentang Jajan Yuk !">
@@ -180,38 +157,6 @@ $db->close();
         <div class="container">
             <h2 class="section-title">Katalog Produk</h2>
 
-            <div class="produk-populer">
-                <h3 class="kategori-title">Produk Populer</h3>
-                <div class="produk-scroll">
-                    <div class="produk-item">
-                        <div class="badge">Baru</div>
-                        <div class="gambar-produk" style="background-image: url('img/popular1.jpg');"></div>
-                        <div class="produk-info">
-                            <h3>Smoothie Berry Bliss</h3>
-                            <p class="harga">Rp 28.000</p>
-                            <div class="rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <p class="deskripsi">Smoothie segar dengan campuran berry yang penuh nutrisi.</p>
-                            <a href="#" class="cek-produk">Lihat Detail</a>
-                        </div>
-                    </div>
-                    <div class="produk-item">
-                        <div class="badge diskon">Diskon 20%</div>
-                        <div class="gambar-produk" style="background-image: url('img/popular2.jpg');"></div>
-                        <div class="produk-info">
-                            <h3>Pudding Mango Delight</h3>
-                            <p class="harga">Rp 24.000 <span class="harga-asli">Rp 30.000</span></p>
-                            <div class="rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                            </div>
-                            <p class="deskripsi">Lezatnya pudding mangga dengan tekstur lembut.</p>
-                            <a href="#" class="cek-produk">Lihat Detail</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="kategori-produk">
                 <h3 class="kategori-title"><i class="fas fa-hamburger"></i> Makanan </h3>
                 <div class="produk-scroll">
@@ -221,16 +166,9 @@ $db->close();
                                 <div class="gambar-produk" style="background-image: url('<?= htmlspecialchars($makanan['url_gambar']) ?>');"></div>
                                 <h3><?= htmlspecialchars($makanan['nama']) ?></h3>
                                 <p class="harga">Rp. <?= number_format($makanan['harga'], 0, ',', '.') . ',00-.' ?></p>
-                                <!-- <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div> -->
                                 <p class="deskripsi"><?= htmlspecialchars($makanan['deskripsi']) ?></p>
-                                <a href="info-produk-pages.php?id=<?= $makanan['id'] ?>&type=foods" class="cek-produk">Lihat Detail</a>
                             </div>
+                            <a href="info-produk-pages.php?id=<?= $makanan['id'] ?>&type=foods" class="cek-produk">Lihat Detail</a>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -245,16 +183,9 @@ $db->close();
                                 <div class="gambar-produk" style="background-image: url('<?= htmlspecialchars($minuman['url_gambar']) ?>');"></div>
                                 <h3><?= htmlspecialchars($minuman['nama']) ?></h3>
                                 <p class="harga">Rp. <?= number_format($minuman['harga'], 0, ',', '.') . ',00-.' ?></p>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
                                 <p class="deskripsi"><?= htmlspecialchars($minuman['deskripsi']) ?></p>
-                                <a href="info-produk-pages.php?id=<?= $minuman['id'] ?>&type=drinks" class="cek-produk">Lihat Detail</a>
                             </div>
+                            <a href="info-produk-pages.php?id=<?= $minuman['id'] ?>&type=drinks" class="cek-produk">Lihat Detail</a>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -264,54 +195,28 @@ $db->close();
 
     <footer>
         <div class="footer-content">
-            <div class="footer-contact">
-                <h3>Hubungi Kami</h3>
-                <form class="contact-form">
-                    <input type="text" placeholder="Nama" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea placeholder="Pesan" required></textarea>
-                    <button type="submit">Kirim</button>
-                </form>
-            </div>
-
             <div class="footer-navigation">
                 <h3>Navigasi</h3>
                 <ul>
                     <li><a href="#beranda"><i class="fas fa-home"></i> Beranda</a></li>
                     <li><a href="#tentang"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
-                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</a></li>
-                    <li><a href="#layanan"><i class="fas fa-cogs"></i> Pelayanan</a></li>
-                    <li><a href="#"><i class="fas fa-box-open"></i> Produk</a></li>
-                    <li><a href="#katalog"><i class="fas fa-th"></i> Katalog Produk</a></li>
-                    <li><a href="#footer"><i class="fas fa-envelope"></i> Kontak</a></li>
-                    <li><a href="#"><i class="fas fa-briefcase"></i> Karir</a></li>
+                    <li><a href="carts-pages.php"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</a></li>
+                    <li><a href="#produk"><i class="fas fa-box-open"></i> Produk</a></li>
                 </ul>
             </div>
 
             <div class="footer-info">
                 <h3>Informasi</h3>
                 <p><i class="fas fa-map-marker-alt"></i> Lokasi : SMKN 1 Kota Bekasi </p>
-                <p><i class="fas fa-envelope"></i> Email : info@jajanyuk.com</p>
-                <p><i class="fas fa-phone"></i> Telepon : ( 021 ) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> Email : -</p>
+                <p><i class="fas fa-phone"></i> Telepon : -</p>
                 <p><i class="fas fa-clock"></i> Jam Operasional : Kamis 30 Januari 2025 ( 06:30 - 11:30 WIB )</p>
             </div>
 
             <div class="footer-social">
                 <h3>Ikuti Kami</h3>
                 <ul>
-                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-payment">
-                <h3>Pembayaran</h3>
-                <ul>
-                    <li><a href="#"><i class="fas fa-credit-card"></i> Transfer Bank</a></li>
-                    <li><a href="#"><i class="fas fa-wallet"></i> E - Monney</a></li>
-                    <li><a href="#"><i class="fas fa-money-bill-wave"></i> Cash On Delivery</a></li>
+                    <li><a href="https://www.instagram.com/marketopia27/"><i class="fab fa-instagram"></i> Instagram</a></li>
                 </ul>
             </div>
         </div>
