@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 22 Jan 2025 pada 12.11
--- Versi server: 8.0.30
--- Versi PHP: 8.3.12
+-- Generation Time: Jan 23, 2025 at 02:44 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cart`
+-- Table structure for table `cart`
 --
 
 CREATE TABLE `cart` (
@@ -40,23 +40,23 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `drinks`
+-- Table structure for table `drinks`
 --
 
 CREATE TABLE `drinks` (
   `drinks_id` int NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_general_ci NOT NULL,
+  `nama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `harga` decimal(10,2) NOT NULL,
-  `ukuran` enum('Kecil','Sedang','Besar') COLLATE utf8mb4_general_ci DEFAULT 'Sedang',
-  `suhu` enum('Dingin','Panas') COLLATE utf8mb4_general_ci DEFAULT 'Dingin',
-  `rasa` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ukuran` enum('Kecil','Sedang','Besar') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Sedang',
+  `suhu` enum('Dingin','Panas') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Dingin',
+  `rasa` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tersedia` tinyint(1) DEFAULT '1',
-  `url_gambar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `url_gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `drinks`
+-- Dumping data for table `drinks`
 --
 
 INSERT INTO `drinks` (`drinks_id`, `nama`, `deskripsi`, `harga`, `ukuran`, `suhu`, `rasa`, `tersedia`, `url_gambar`) VALUES
@@ -67,21 +67,21 @@ INSERT INTO `drinks` (`drinks_id`, `nama`, `deskripsi`, `harga`, `ukuran`, `suhu
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `foods`
+-- Table structure for table `foods`
 --
 
 CREATE TABLE `foods` (
   `foods_id` int NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_general_ci,
+  `nama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `harga` decimal(10,2) NOT NULL,
   `quantity` int DEFAULT NULL,
-  `gambar` text COLLATE utf8mb4_general_ci,
-  `nama_gambar` text COLLATE utf8mb4_general_ci
+  `gambar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `nama_gambar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `foods`
+-- Dumping data for table `foods`
 --
 
 INSERT INTO `foods` (`foods_id`, `nama`, `deskripsi`, `harga`, `quantity`, `gambar`, `nama_gambar`) VALUES
@@ -100,21 +100,59 @@ INSERT INTO `foods` (`foods_id`, `nama`, `deskripsi`, `harga`, `quantity`, `gamb
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `pre_orders`
+--
+
+CREATE TABLE `pre_orders` (
+  `id_pre_order` int NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_product` varchar(255) NOT NULL,
+  `status` enum('pending','confirmed','canceled') DEFAULT 'pending',
+  `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `quantity` int NOT NULL,
+  `total_price` float DEFAULT NULL,
+  `kelas` varchar(50) DEFAULT NULL,
+  `user_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `pre_orders`
+--
+
+INSERT INTO `pre_orders` (`id_pre_order`, `username`, `nama_product`, `status`, `order_date`, `quantity`, `total_price`, `kelas`, `user_id`) VALUES
+(1, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 12:32:06', 1, 12000, NULL, NULL),
+(2, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 12:38:04', 1, 12000, NULL, NULL),
+(3, 'Kenzie', 'Sawi Gulung, Mie Roll', 'pending', '2025-01-23 13:14:39', 2, 22000, NULL, NULL),
+(4, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 13:19:33', 1, 12000, NULL, NULL),
+(5, 'Kenzie', 'Sawi Gulung', 'pending', '2025-01-23 13:25:17', 1, 10000, NULL, NULL),
+(6, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 13:39:09', 1, 12000, NULL, NULL),
+(7, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 13:41:16', 1, 12000, NULL, NULL),
+(8, 'Kenzie', 'Sushi, Donat Coklat', 'pending', '2025-01-23 13:50:34', 2, 11000, NULL, NULL),
+(9, 'Kenzie', 'Donat Coklat', 'pending', '2025-01-23 14:06:17', 1, 4000, NULL, NULL),
+(10, 'Kenzie', 'Donat Coklat', 'pending', '2025-01-23 14:08:05', 1, 4000, 'XI RPL B', NULL),
+(11, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 14:13:38', 1, 12000, 'XI RPL B', NULL),
+(12, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 14:35:26', 1, 12000, 'XI RPL B', NULL),
+(13, 'Kenzie', 'Sawi Gulung, Mie Roll', 'pending', '2025-01-23 14:43:14', 2, 22000, 'XI RPL B', NULL),
+(14, 'Kenzie', 'Snack Kriukkk-Seblak Kering', 'pending', '2025-01-23 14:43:39', 1, 5000, 'XI RPL B', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `kelas` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `kelas` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `kelas`, `created_at`, `updated_at`) VALUES
@@ -124,68 +162,92 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `kelas`, `created_at
 (4, 'Ruan Meia', 'a@g.com', '$2y$10$lPGdAllfhfr0spAe/rAlauEt/4AK5wgeW.WjtUBTLinZq6Ii6vf06', 'aaaa', '2025-01-22 00:23:29', '2025-01-22 00:23:29'),
 (5, 'Mupdi', 'nmufidibrahim@gmail.com', '$2y$10$.XEezWBOR6oekclgo2V70O1SQjZk58yuTZJgojwvHoZBSm9VLbap2', 'XI PPLG B', '2025-01-22 00:30:55', '2025-01-22 00:30:55'),
 (6, 'Handikach', 'handika@k.com', '$2y$10$QsUWLRuvz55P2om/dFfs5.D.E/rpPH65h6Gp9WQDZE.ppNdijxVz6', 'XI PPLG B', '2025-01-22 00:35:53', '2025-01-22 00:35:53'),
-(7, 'michael', 'carlosimbolon23@gmail.com', '$2y$10$lhgMsg.4vzK5H2icb5ZdfeCr4VxplsZf6bNaU1kBzmL5QeF7XHNnC', 'XI RPL B', '2025-01-22 00:38:17', '2025-01-22 00:38:17');
+(7, 'michael', 'carlosimbolon23@gmail.com', '$2y$10$lhgMsg.4vzK5H2icb5ZdfeCr4VxplsZf6bNaU1kBzmL5QeF7XHNnC', 'XI RPL B', '2025-01-22 00:38:17', '2025-01-22 00:38:17'),
+(8, 'Kenzie', 'yasirkenzie@gmail.com', '$2y$10$j3Zk1LQv9voyFlpe5x4t5e3qxKy0Zb3/9I6lZxTouWxhMCys/fkl.', 'XI RPL B', '2025-01-22 12:18:08', '2025-01-22 12:18:08');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `cart`
+-- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id_cart`),
   ADD KEY `id_product` (`id_product`);
 
 --
--- Indeks untuk tabel `drinks`
+-- Indexes for table `drinks`
 --
 ALTER TABLE `drinks`
   ADD PRIMARY KEY (`drinks_id`);
 
 --
--- Indeks untuk tabel `foods`
+-- Indexes for table `foods`
 --
 ALTER TABLE `foods`
   ADD PRIMARY KEY (`foods_id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `pre_orders`
+--
+ALTER TABLE `pre_orders`
+  ADD PRIMARY KEY (`id_pre_order`),
+  ADD KEY `username` (`username`),
+  ADD KEY `fk_user_id` (`user_id`);
+
+--
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `username_2` (`username`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `cart`
+-- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT untuk tabel `foods`
+-- AUTO_INCREMENT for table `foods`
 --
 ALTER TABLE `foods`
   MODIFY `foods_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `pre_orders`
+--
+ALTER TABLE `pre_orders`
+  MODIFY `id_pre_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `cart`
+-- Constraints for table `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `foods` (`foods_id`);
+
+--
+-- Constraints for table `pre_orders`
+--
+ALTER TABLE `pre_orders`
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pre_orders_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,3 +1,4 @@
+
 <?php
 include "CODES/BACKEND/db.php";
 session_start();
@@ -37,21 +38,39 @@ if (isset($_GET['idproduk'])) {
     }
 }
 
+$dataproduk = []; // Inisialisasi array kosong
+
 $sql2 = "SELECT * FROM cart";
 $result2 = $db->query($sql2);
-if ($result2->num_rows > 0) {
+
+if (!$result2) {
+    // Jika query gagal
+    echo "Error: " . $db->error;
+} elseif ($result2->num_rows > 0) {
+    // Jika ada data dalam tabel cart
     while ($row2 = $result2->fetch_assoc()) {
         $dataproduk[] = [
             'id' => $row2['id_product'],
             'nama' => $row2['nama_product'],
             'harga' => $row2['harga'],
-            // 'id' => $row2['drinks_id'],
             'url_gambar' => $row2['gambar'],
             'nama_gambar' => $row2['nama_gambar'],
         ];
     }
-    //$_SESSION['list_minuman'] = $dataminuman;
+} else {
+    // Jika tabel cart kosong
+    echo "<p>Keranjang kosong.</p>";
 }
+
+
+if (!empty($dataproduk)) {
+    foreach ($dataproduk as $produk) {
+        // Render item cart
+    }
+} else {
+    echo "<p>Keranjang kosong</p>";
+}
+
 $sqljumlah = "SELECT COUNT(id_cart) AS id FROM cart";
 $resultjumlah = $db->query($sqljumlah);
 
@@ -72,9 +91,125 @@ if (isset($_GET['iddelete'])) {
     
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
+
 }
 
+function processPreOrder($db, $username = null) {
+    // Debugging: Check database connection
+    if (!$db) {
+        echo "Database connection error!";
+        return;
+    }
+
+    // Retrieve cart items
+    $sql_cart = "SELECT * FROM cart";
+    $result_cart = $db->query($sql_cart);
+    
+    if (!$result_cart) {
+        echo "Error fetching cart items: " . $db->error;
+        return;
+    }
+
+    if ($result_cart->num_rows > 0) {
+        $total_price = 0;
+        $product_names = [];
+        $total_quantity = 0;
+
+        try {
+            // Prepare the pre-order insertion using the correct table name
+            $sql_preorder = "INSERT INTO pre_orders (username, nama_product, quantity, total_price) VALUES (?, ?, ?, ?)";
+            $stmt_preorder = $db->prepare($sql_preorder);
+
+            if (!$stmt_preorder) {
+                echo "Prepare failed: " . $db->error;
+                return;
+            }
+
+            // Calculate total price and collect product names
+            while ($row = $result_cart->fetch_assoc()) {
+                $total_price += $row['harga'];
+                $product_names[] = $row['nama_product'];
+                $total_quantity++;
+            }
+
+            $kelas = 'Tidak Diketahui';
+            if ($username !== 'Guest') {
+                $sql_user = "SELECT kelas FROM users WHERE username = ?";
+                $stmt_user = $db->prepare($sql_user);
+                $stmt_user->bind_param("s", $username);
+                $stmt_user->execute();
+                $result_user = $stmt_user->get_result();
+                if ($result_user->num_rows > 0) {
+                    $user = $result_user->fetch_assoc();
+                    $kelas = $user['kelas'];
+                }
+            }
+
+            // Convert product names to a comma-separated string
+            $product_name_string = implode(', ', $product_names);
+
+            // Execute pre-order insertion
+            $sql_preorder = "INSERT INTO pre_orders (username, nama_product, quantity, total_price, kelas) VALUES (?, ?, ?, ?, ?)";
+            $stmt_preorder = $db->prepare($sql_preorder);
+            $stmt_preorder->bind_param("ssids", $username, $product_name_string, $total_quantity, $total_price, $kelas);
+            $result = $stmt_preorder->execute();
+            
+
+            if (!$result) {
+                echo "Execute failed: " . $stmt_preorder->error;
+                return;
+            }
+
+            $preorder_id = $db->insert_id;
+
+            // Clear cart after successful pre-order
+            $db->query("DELETE FROM cart");
+
+            // Redirect to pre-order page with pre-order ID
+            header("Location: pre-order-pages.php?id=" . $preorder_id);
+            exit();
+
+        } catch (Exception $e) {
+            echo "Pre-order failed: " . $e->getMessage();
+        }
+    } else {
+        echo "Keranjang kosong. Tidak dapat melakukan pre-order.";
+    }
+}
+
+// Check if session is started, if not start it
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Trigger pre-order process
+if (isset($_POST['submit_preorder'])) {
+    // Use username from session or as guest
+    $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
+    processPreOrder($db, $username);
+}
 ?>
+
+
+
+<form id="preOrderForm" method="POST">
+    <input type="hidden" name="submit_preorder" value="1">
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const preOrderButton = document.getElementById('preOrder');
+    const preOrderForm = document.getElementById('preOrderForm');
+    
+    if (preOrderButton && preOrderForm) {
+        preOrderButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            preOrderForm.submit();
+        });
+    }
+});
+
+</script>
 
 <!DOCTYPE html>
 <html lang="en">

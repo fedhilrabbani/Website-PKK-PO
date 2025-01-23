@@ -24,20 +24,49 @@ if (isset($_SESSION['user_id'])) {
     header('location: login.php'); // Redirect ke halaman login
     exit;
 }
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Retrieve pre-order details
+if (isset($_GET['id'])) {
+    $preorder_id = intval($_GET['id']);
+    
+    // Fetch pre-order details
+    $sql_preorder = "SELECT * FROM pre_orders WHERE id_pre_order = ?";
+    $stmt_preorder = $db->prepare($sql_preorder);
+    $stmt_preorder->bind_param("i", $preorder_id);
+    $stmt_preorder->execute();
+    $result_preorder = $stmt_preorder->get_result();
+    
+    if ($result_preorder->num_rows > 0) {
+        $preorder = $result_preorder->fetch_assoc();
+        
+        // Gunakan username dari tabel pre_orders
+        $username = $preorder['username'];
+        
+        // Fetch user details (misalkan ada relasi user dengan username)
+        $sql_user = "SELECT kelas FROM users WHERE username = ?";
+        $stmt_user = $db->prepare($sql_user);
+        $stmt_user->bind_param("s", $username);
+        $stmt_user->execute();
+        $result_user = $stmt_user->get_result();
+
+        if ($result_user->num_rows > 0) {
+            $user = $result_user->fetch_assoc();
+        } else {
+            $user = ['kelas' => 'Tidak Diketahui'];
+        }
+    } else {
+        die("Pre-order not found");
+    }
+} else {
+    die("No pre-order ID provided");
+}
+
 ?>
 
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('order-summary-name').textContent = '<?php echo $userData["username"] ?? ""; ?>';
-    document.getElementById('order-summary-kelas').textContent = '<?php echo $userData["kelas"] ?? ""; ?>';
-});
-</script>
-?>
-
-<script>
-
-</script>
 
 
 <!DOCTYPE html>
@@ -52,6 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="CODES/CSS/pre-order-pages-styles.css">
     <script src="CODES/JS/pre-order-pages-scripts.js" defer></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('order-summary-name').textContent = '<?php echo $userData["username"] ?? ""; ?>';
+    document.getElementById('order-summary-kelas').textContent = '<?php echo $userData["kelas"] ?? ""; ?>';
+});
+</script>
 </head>
 
 <body>
@@ -68,20 +104,22 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
         </header>
 
-            <div id="order-summary" class="order-summary hidden">
-                <h2>Rincian Pesanan</h2>
-                <p><strong>Nama :</strong> <span id="order-summary-name"></span></p>
-                <p><strong>Kelas :</strong> <span id="order-summary-kelas"></span></p>
-                <div class="product-item">
-                    <ul>
-                        <li><strong>Produk Minuman :</strong> Rp 25,000</li>
-                        <li><strong>Produk Makanan :</strong> Rp 50,000</li>
-                    </ul>
-                </div>
-                <div class="total-harga">
-                    <span>Total Harga : <strong>Rp 75,000</strong></span>
-                </div>
-                <button id="proceed-to-transaction" class="pay-button">Lanjutkan ke Transaksi</button>
+        <div id="order-summary" class="order-summary">
+    <h2>Rincian Pesanan</h2>
+    <p><strong>Nama :</strong> <?php echo htmlspecialchars($username); ?></p>
+    <p><strong>Kelas :</strong> <?php echo htmlspecialchars($user['kelas']); ?></p>
+
+
+      <div class="product-item">
+        <ul>
+            <li><strong>Produk :</strong> <?php echo htmlspecialchars($preorder['nama_product']); ?></li>
+            <li><strong>Jumlah :</strong> <?php echo intval($preorder['quantity']); ?></li>
+        </ul>
+    </div>
+    <div class="total-harga">
+        <span>Total Harga : <strong>Rp <?php echo number_format($preorder['total_price'], 0, ',', '.'); ?></strong></span>
+    </div>
+    <button id="proceed-to-transaction" class="pay-button">Lanjutkan ke Transaksi</button>
 </div>
 
             <div id="receipt" class="receipt hidden">
