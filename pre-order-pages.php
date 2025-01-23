@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <nav class="menu">
                 <a href="dashboard.php" class="menu-link"><i class="fas fa-home"></i></a>
                 <a href="carts-pages.php" class="menu-link"><i class="fas fa-shopping-cart"></i></a>
-                <a href="info-produk-pages.php" class="menu-link"><i class="fas fa-info-circle"></i></a>
             </nav>
         </header>
 
@@ -119,18 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="total-harga">
         <span>Total Harga : <strong>Rp <?php echo number_format($preorder['total_price'], 0, ',', '.'); ?></strong></span>
     </div>
-    <button id="proceed-to-transaction" class="pay-button">Lanjutkan ke Transaksi</button>
+    <button id="proceed-to-transaction" class="pay-button">Silahkan Datang ke ruang D1 pada 30 Januari 2025</button>
 </div>
-
-            <div id="receipt" class="receipt hidden">
-                <h2>Struk Pembayaran</h2>
-                <p><strong>Nama :</strong> <span id="receipt-name"><?php echo htmlspecialchars($username); ?></span></p>
-                <p><strong>Nomor Transaksi :</strong> <span id="receipt-transaction"></span></p>
-                <p><strong>Tanggal :</strong> <span id="receipt-date"></span></p>
-                <p><strong>Total Harga :</strong> Rp 75,000</p>
-                <p><strong>Status :</strong> Lunas</p>
-                <button id="new-order" class="new-order-button">Pesan Lagi</button>
-            </div>
         </main>
 
         <footer class="footer">

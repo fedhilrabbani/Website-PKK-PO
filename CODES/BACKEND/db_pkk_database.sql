@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 23, 2025 at 02:44 PM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 23 Jan 2025 pada 17.47
+-- Versi server: 8.0.30
+-- Versi PHP: 8.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Struktur dari tabel `cart`
 --
 
 CREATE TABLE `cart` (
@@ -34,13 +34,13 @@ CREATE TABLE `cart` (
   `harga` float DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `nama_gambar` varchar(255) DEFAULT NULL,
-  `quantity_total` int DEFAULT NULL
+  `quantity_total` int DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `drinks`
+-- Struktur dari tabel `drinks`
 --
 
 CREATE TABLE `drinks` (
@@ -48,26 +48,24 @@ CREATE TABLE `drinks` (
   `nama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `harga` decimal(10,2) NOT NULL,
-  `ukuran` enum('Kecil','Sedang','Besar') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Sedang',
-  `suhu` enum('Dingin','Panas') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Dingin',
-  `rasa` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tersedia` tinyint(1) DEFAULT '1',
-  `url_gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `quantity` int DEFAULT NULL,
+  `gambar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_gambar` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `drinks`
+-- Dumping data untuk tabel `drinks`
 --
 
-INSERT INTO `drinks` (`drinks_id`, `nama`, `deskripsi`, `harga`, `ukuran`, `suhu`, `rasa`, `tersedia`, `url_gambar`) VALUES
-(1, 'Soda Gembira', 'Minuman soda dengan susu dan sirup segar.', 10000.00, 'Sedang', 'Dingin', 'Strawberry', 1, 'images/soda_gembira.jpg'),
-(2, 'Teh Manis Panas', 'Teh manis hangat.', 5000.00, 'Kecil', 'Panas', NULL, 1, 'images/teh_manis.jpg'),
-(3, 'Kopi Latte', 'Kopi dengan susu yang lembut.', 15000.00, 'Besar', 'Panas', 'Vanilla', 1, 'images/kopi_latte.jpg');
+INSERT INTO `drinks` (`drinks_id`, `nama`, `deskripsi`, `harga`, `quantity`, `gambar`, `nama_gambar`) VALUES
+(1, 'Soda Gembira', 'Minuman soda dengan susu dan sirup segar.', 10000.00, 1, 'images/soda_gembira.jpg', ''),
+(2, 'Teh Manis Panas', 'Teh manis hangat.', 5000.00, 1, 'images/teh_manis.jpg', ''),
+(3, 'Kopi Latte', 'Kopi dengan susu yang lembut.', 15000.00, 1, 'images/kopi_latte.jpg', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `foods`
+-- Struktur dari tabel `foods`
 --
 
 CREATE TABLE `foods` (
@@ -81,26 +79,26 @@ CREATE TABLE `foods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `foods`
+-- Dumping data untuk tabel `foods`
 --
 
 INSERT INTO `foods` (`foods_id`, `nama`, `deskripsi`, `harga`, `quantity`, `gambar`, `nama_gambar`) VALUES
-(1, 'Mie Roll', NULL, 12000.00, 20, 'assets/images-product/Mie Roll.jpg', 'Mie Roll.jpg'),
-(2, 'Sawi Gulung', NULL, 10000.00, 20, 'assets/images-product/Sawi Gulung.jpg', 'Sawi Gulung.jpg'),
-(3, 'Keripik Pisang Lumer', NULL, 5000.00, 12, 'assets/images-product/Keripik Pisang Lumer.jpg', 'Keripik Pisang Lumer.jpg'),
-(4, 'Sushi', NULL, 7000.00, 20, 'assets/images-product/sushi.jpg', 'sushi.jpg'),
-(5, 'Donat Coklat', NULL, 4000.00, 20, 'assets/images-product/Donat.jpg', 'Donat.jpg'),
-(6, 'Salad Buah', NULL, 15000.00, 12, 'assets/images-product/Salad Buah.jpg', 'Salad Buah.jpg'),
-(7, 'Snack Kriukkk-Basreng Pedas', NULL, 5000.00, 15, 'assets/images-product/Basreng.jpg', 'Basreng.jpg'),
-(8, 'Snack Kriukkk-Seblak Kering', NULL, 5000.00, 15, 'assets/images-product/Seblak Kering.jpg', 'Seblak Kering.jpg'),
-(9, 'Baso Mercon', NULL, 10000.00, 25, 'assets/images-product/Baso Mercon.jpg', 'Baso Mercon.jpg'),
-(10, 'Risol', NULL, 2500.00, 40, 'assets/images-product/Risol.jpg', 'Risol.jpg'),
-(11, 'Banana Roll', NULL, 7000.00, 10, 'assets/images-product/Banana Roll.jpg', 'Banana Roll.jpg');
+(1, 'Mie Roll', 'Mie yang digulung dengan ricepaper', 12000.00, 19, 'assets/images-product/Mie Roll.jpg', 'Mie Roll.jpg'),
+(2, 'Sawi Gulung', 'Sawi gulung sehat', 10000.00, 20, 'assets/images-product/Sawi Gulung.jpg', 'Sawi Gulung.jpg'),
+(3, 'Keripik Pisang Lumer', 'Kripik dengan coklat lumer', 5000.00, 12, 'assets/images-product/Keripik Pisang Lumer.jpg', 'Keripik Pisang Lumer.jpg'),
+(4, 'Sushi', 'Sushi khas jepang ala nusantara', 7000.00, 20, 'assets/images-product/sushi.jpg', 'sushi.jpg'),
+(5, 'Donat Coklat', 'Donut dengan topping coklat', 4000.00, 20, 'assets/images-product/Donat.jpg', 'Donat.jpg'),
+(6, 'Salad Buah', 'Salad dengan campuran buah', 15000.00, 12, 'assets/images-product/Salad Buah.jpg', 'Salad Buah.jpg'),
+(7, 'Snack Kriukkk-Basreng Pedas', 'Basreng yang kriuk dan membara di mulut', 5000.00, 15, 'assets/images-product/Basreng.jpg', 'Basreng.jpg'),
+(8, 'Snack Kriukkk-Seblak Kering', 'Seblak yang crunchy dan pedas', 5000.00, 15, 'assets/images-product/Seblak Kering.jpg', 'Seblak Kering.jpg'),
+(9, 'Baso Mercon', 'Bakso dengan sensasi berapi-api di mulut', 10000.00, 25, 'assets/images-product/Baso Mercon.jpg', 'Baso Mercon.jpg'),
+(10, 'Risol', 'Jajanan populer kalangan anak muda', 2500.00, 40, 'assets/images-product/Risol.jpg', 'Risol.jpg'),
+(11, 'Banana Roll', 'Banana Roll yang lumer', 7000.00, 10, 'assets/images-product/Banana Roll.jpg', 'Banana Roll.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pre_orders`
+-- Struktur dari tabel `pre_orders`
 --
 
 CREATE TABLE `pre_orders` (
@@ -116,7 +114,7 @@ CREATE TABLE `pre_orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `pre_orders`
+-- Dumping data untuk tabel `pre_orders`
 --
 
 INSERT INTO `pre_orders` (`id_pre_order`, `username`, `nama_product`, `status`, `order_date`, `quantity`, `total_price`, `kelas`, `user_id`) VALUES
@@ -133,12 +131,20 @@ INSERT INTO `pre_orders` (`id_pre_order`, `username`, `nama_product`, `status`, 
 (11, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 14:13:38', 1, 12000, 'XI RPL B', NULL),
 (12, 'Kenzie', 'Mie Roll', 'pending', '2025-01-23 14:35:26', 1, 12000, 'XI RPL B', NULL),
 (13, 'Kenzie', 'Sawi Gulung, Mie Roll', 'pending', '2025-01-23 14:43:14', 2, 22000, 'XI RPL B', NULL),
-(14, 'Kenzie', 'Snack Kriukkk-Seblak Kering', 'pending', '2025-01-23 14:43:39', 1, 5000, 'XI RPL B', NULL);
+(14, 'Kenzie', 'Snack Kriukkk-Seblak Kering', 'pending', '2025-01-23 14:43:39', 1, 5000, 'XI RPL B', NULL),
+(34, 'a', 'Mie Roll, Baso Mercon', 'pending', '2025-01-23 16:17:44', 2, 22000, 'a', NULL),
+(35, 'a', 'Mie Roll, Sawi Gulung', 'pending', '2025-01-23 16:25:14', 2, 22000, 'a', NULL),
+(36, 'a', 'Donat Coklat', 'pending', '2025-01-23 16:25:34', 1, 4000, 'a', NULL),
+(37, 'a', 'Sushi', 'pending', '2025-01-23 16:26:56', 1, 7000, 'a', NULL),
+(38, 'a', 'Sushi', 'pending', '2025-01-23 16:27:10', 1, 7000, 'a', NULL),
+(39, 'a', 'Mie Roll, Keripik Pisang Lumer', 'pending', '2025-01-23 17:30:46', 2, 17000, 'a', NULL),
+(40, 'a', 'Sushi', 'pending', '2025-01-23 17:36:42', 1, 7000, 'a', NULL),
+(41, 'a', 'Mie Roll', 'pending', '2025-01-23 17:38:02', 1, 12000, 'a', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -152,7 +158,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `kelas`, `created_at`, `updated_at`) VALUES
@@ -163,33 +169,34 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `kelas`, `created_at
 (5, 'Mupdi', 'nmufidibrahim@gmail.com', '$2y$10$.XEezWBOR6oekclgo2V70O1SQjZk58yuTZJgojwvHoZBSm9VLbap2', 'XI PPLG B', '2025-01-22 00:30:55', '2025-01-22 00:30:55'),
 (6, 'Handikach', 'handika@k.com', '$2y$10$QsUWLRuvz55P2om/dFfs5.D.E/rpPH65h6Gp9WQDZE.ppNdijxVz6', 'XI PPLG B', '2025-01-22 00:35:53', '2025-01-22 00:35:53'),
 (7, 'michael', 'carlosimbolon23@gmail.com', '$2y$10$lhgMsg.4vzK5H2icb5ZdfeCr4VxplsZf6bNaU1kBzmL5QeF7XHNnC', 'XI RPL B', '2025-01-22 00:38:17', '2025-01-22 00:38:17'),
-(8, 'Kenzie', 'yasirkenzie@gmail.com', '$2y$10$j3Zk1LQv9voyFlpe5x4t5e3qxKy0Zb3/9I6lZxTouWxhMCys/fkl.', 'XI RPL B', '2025-01-22 12:18:08', '2025-01-22 12:18:08');
+(8, 'Kenzie', 'yasirkenzie@gmail.com', '$2y$10$j3Zk1LQv9voyFlpe5x4t5e3qxKy0Zb3/9I6lZxTouWxhMCys/fkl.', 'XI RPL B', '2025-01-22 12:18:08', '2025-01-22 12:18:08'),
+(9, 'a', 'a@gmail.com', '$2y$10$ZPzVhGBJcOvZwDFf7qN96.8SSQKRuZTdebKjCMGPw4BoFBUgsMecO', 'a', '2025-01-23 15:44:57', '2025-01-23 15:44:57');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cart`
+-- Indeks untuk tabel `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id_cart`),
   ADD KEY `id_product` (`id_product`);
 
 --
--- Indexes for table `drinks`
+-- Indeks untuk tabel `drinks`
 --
 ALTER TABLE `drinks`
   ADD PRIMARY KEY (`drinks_id`);
 
 --
--- Indexes for table `foods`
+-- Indeks untuk tabel `foods`
 --
 ALTER TABLE `foods`
   ADD PRIMARY KEY (`foods_id`);
 
 --
--- Indexes for table `pre_orders`
+-- Indeks untuk tabel `pre_orders`
 --
 ALTER TABLE `pre_orders`
   ADD PRIMARY KEY (`id_pre_order`),
@@ -197,7 +204,7 @@ ALTER TABLE `pre_orders`
   ADD KEY `fk_user_id` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -205,45 +212,45 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username_2` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_cart` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
--- AUTO_INCREMENT for table `foods`
+-- AUTO_INCREMENT untuk tabel `foods`
 --
 ALTER TABLE `foods`
   MODIFY `foods_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `pre_orders`
+-- AUTO_INCREMENT untuk tabel `pre_orders`
 --
 ALTER TABLE `pre_orders`
-  MODIFY `id_pre_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_pre_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `cart`
+-- Ketidakleluasaan untuk tabel `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `foods` (`foods_id`);
 
 --
--- Constraints for table `pre_orders`
+-- Ketidakleluasaan untuk tabel `pre_orders`
 --
 ALTER TABLE `pre_orders`
   ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),

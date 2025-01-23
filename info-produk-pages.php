@@ -30,10 +30,10 @@ if (isset($_GET['id']) && isset($_GET['type'])) {
             $stock = $produk['quantity'];
             $url_gambar = $produk['gambar'];
 
-            if($stock < 0) {
+            if ($stock < 1) {
                 $message = "Habis";
             } else {
-                $message = "Tersedia";
+                $message = "Tersedia: " . $stock . " unit"; // Mengambil stok dari kolom quantity
             }
 
             // if ($type === 'foods') {
@@ -192,9 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="carts-pages.php" class="menu-link">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
-                    <a href="pre-order-pages.php" class="menu-link">
+                    <!-- <a href="pre-order-pages.php" class="menu-link">
                         <i class="fas fa-check-circle"></i>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </header>
@@ -223,43 +223,88 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="produk-additional-info">
-                    <div class="produk-availability">
-                        <h4>Tersedia : <?= htmlspecialchars($message) ?></h4>
-                    </div>
-
-                    <?php if ($type === 'foods'): ?>
-                        <div class="produk-food-info">
-                            <h4>Informasi Makanan</h4>
-                            <p><strong><i class="fas fa-utensils"></i> Ukuran Porsi :</strong> <?= htmlspecialchars($ukuran_porsi) ?></p>
-                            <p><strong><i class="fas fa-pepper-hot"></i> Tingkat Pedas :</strong> <?= htmlspecialchars($tingkat_pedas) ?></p>
-                            <p><strong><i class="fas fa-flask"></i> Rasa :</strong> <?= htmlspecialchars($deskripsi_rasa) ?></p>
-                            <!-- <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p> -->
-                            <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
-                        </div>
-                    <?php elseif ($type === 'drinks'): ?>
-                        <div class="produk-drink-info">
-                            <h4>Informasi Minuman</h4>
-                            <p><strong><i class="fas fa-temperature-high"></i> Suhu :</strong> <?= htmlspecialchars($suhu) ?></p>
-                            <p><strong><i class="fas fa-tint"></i> Rasa :</strong> <?= htmlspecialchars($rasa) ?></p>
-                            <p><strong><i class="fas fa-glass-whiskey"></i> Volume :</strong> <?= htmlspecialchars($volume) ?> ml</p>
-                            <!-- <p><strong><i class="fas fa-chart-bar"></i> Gizi :</strong> <?= htmlspecialchars($deskripsi_gizi) ?></p> -->
-                            <p><strong><i class="fas fa-clock"></i> Waktu Penyajian :</strong> <?= htmlspecialchars($waktu_penyajian) ?></p>
-                        </div>
-                    <?php endif; ?>
+                <div class="produk-availability">
+                    <h4><?= htmlspecialchars($message) ?></h4> <!-- Menampilkan status stok -->
+                </div>
                 </div>
                 <div class="product-quantity">
-                        <form class="quantity-control" action="carts-pages.php" method="">
-                            <button class="minus-btn" data-id="2">-</button>
-                            <input type="number" value="1" class="quantity-input" data-id="2">
-                            <button class="plus-btn" data-id="2" name="plusbtn">+</button>
-                        </form>
-                    </div>
+                <form class="quantity-control">
+                    <button class="minus-btn" type="button">-</button>
+                    <input type="number" value="1" class="quantity-input" name="quantity_total" min="1">
+                    <button class="plus-btn" type="button">+</button>
+                </form>
+            </div>
+            
+            <form id="cartForm" action="carts-pages.php" method="POST" style="display: none;">
+                <input type="hidden" name="id_produk" value="<?= htmlspecialchars($id) ?>">
+                <input type="hidden" name="quantity_total" id="hiddenQuantityInput" value="1">
+                <input type="hidden" name="nama_product" value="<?= htmlspecialchars($nama) ?>">
+                <input type="hidden" name="harga" value="<?= htmlspecialchars($harga) ?>">
+                <input type="hidden" name="gambar" value="<?= htmlspecialchars($url_gambar) ?>">
+                <input type="hidden" name="nama_gambar" value="<?= htmlspecialchars(basename($url_gambar)) ?>">
+            </form>
+            <div class="produk-action">
+                <a href="#" id="addToCart" class="add-to-cart-btn">Tambah Ke Keranjang</a>
+            </div>
 
-                <div class="produk-action">
-                    <a href="carts-pages.php?idproduk=<?= $id ?>" class="add-to-cart-btn">Tambah Ke Keranjang</a>
+
                 </div>
             </div>
         </div>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const minusButtons = document.querySelectorAll('.minus-btn');
+    const plusButtons = document.querySelectorAll('.plus-btn');
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+
+    const updateQuantity = (inputElement, increment) => {
+        let currentQuantity = parseInt(inputElement.value) || 0;
+        currentQuantity += increment;
+        currentQuantity = Math.max(1, currentQuantity); // Prevent quantity from being less than 1
+        inputElement.value = currentQuantity;
+    };
+
+    minusButtons.forEach((button, index) => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            updateQuantity(quantityInputs[index], -1);
+        });
+    });
+
+    plusButtons.forEach((button, index) => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            updateQuantity(quantityInputs[index], 1);
+        });
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const addToCartButton = document.getElementById('addToCart');
+    const cartForm = document.getElementById('cartForm');
+    const quantityInput = document.querySelector('.quantity-input');
+    const hiddenQuantityInput = document.getElementById('hiddenQuantityInput');
+
+    if (addToCartButton && cartForm && quantityInput && hiddenQuantityInput) {
+        addToCartButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Mencegah navigasi default dari link
+            
+            // Ambil nilai dari input quantity
+            const quantityValue = parseInt(quantityInput.value, 10) || 1;
+            
+            // Debugging untuk memastikan nilai quantity
+            console.log('Quantity Value:', quantityValue);
+            
+            // Masukkan nilai quantity ke input tersembunyi
+            hiddenQuantityInput.value = quantityValue;
+
+            // Submit form secara otomatis
+            cartForm.submit();
+        });
+    }
+});
+</script>
 
 </html>
