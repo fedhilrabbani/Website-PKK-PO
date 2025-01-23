@@ -78,6 +78,69 @@ if (isset($error)) {
 //         header("Location: carts-pages.php");
 //     }
 // }
+
+function processPreOrderDirect($db, $username, $product_id) {
+    // Debugging: Check database connection
+    if (!$db) {
+        die("Database connection error!");
+    }
+
+    // Debug: Pastikan parameter product_id diterima
+    if (empty($product_id)) {
+        die("Parameter tidak lengkap. Harap pilih produk.");
+    }
+
+    // Default kelas
+    $kelas = 'Tidak Diketahui';
+
+    // Cek kelas user jika bukan Guest
+    if ($username !== 'Guest') {
+        $sql_user = "SELECT kelas FROM users WHERE username = ?";
+        $stmt_user = $db->prepare($sql_user);
+        $stmt_user->bind_param("s", $username);
+        $stmt_user->execute();
+        $result_user = $stmt_user->get_result();
+
+        if ($result_user->num_rows > 0) {
+            $user = $result_user->fetch_assoc();
+            $kelas = $user['kelas'];
+        }
+    }
+
+    // Ambil detail produk dari database
+    $sql_product = "SELECT * FROM foods WHERE foods_id = ?";
+    $stmt_product = $db->prepare($sql_product);
+    $stmt_product->bind_param("i", $product_id);
+    $stmt_product->execute();
+    $result_product = $stmt_product->get_result();
+
+    if ($result_product->num_rows > 0) {
+        $product = $result_product->fetch_assoc();
+        $nama_product = $product['nama'];
+        $harga = $product['harga'];
+
+        // Masukkan data ke tabel pre_orders
+        $sql_preorder = "INSERT INTO pre_orders (username, nama_product, quantity, total_price, kelas) VALUES (?, ?, ?, ?, ?)";
+        $stmt_preorder = $db->prepare($sql_preorder);
+        $quantity = 1; // Jumlah default untuk Pre Order langsung
+        $total_price = $harga * $quantity;
+
+        $stmt_preorder->bind_param("ssids", $username, $nama_product, $quantity, $total_price, $kelas);
+
+        if ($stmt_preorder->execute()) {
+            $preorder_id = $db->insert_id;
+
+            // Redirect ke halaman pre-order
+            header("Location: pre-order-pages.php?id=" . $preorder_id);
+            exit();
+        } else {
+            die("Error: " . $stmt_preorder->error);
+        }
+    } else {
+        die("Produk tidak ditemukan.");
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -92,9 +155,26 @@ if (isset($error)) {
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="CODES/JS/info-produk-scripts.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const preOrderButton = document.getElementById('preOrder');
+    const preOrderForm = document.getElementById('preOrderForm');
+    
+    if (preOrderButton && preOrderForm) {
+        preOrderButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            preOrderForm.submit();
+        });
+    }
+});
+
+</script>
+
+
 </head>
 
-<body>
+<div>
     <div id="container">
         <header>
             <div class="kontainer-header">
@@ -171,14 +251,9 @@ if (isset($error)) {
 
                 <div class="produk-action">
                     <a href="carts-pages.php?idproduk=<?= $id ?>" class="add-to-cart-btn">Tambah Ke Keranjang</a>
-                    <a href="" class="buy-now-btn">Pre Order</a>
                 </div>
             </div>
         </div>
 </body>
 
 </html>
-
-<?php
-$db->close();
-?>
