@@ -2,6 +2,11 @@
 include "CODES/BACKEND/db.php";
 session_start();
 
+if (isset($_SESSION["is_login"])) {
+    header("location: dashboard.php");
+    exit;
+}
+
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -21,6 +26,7 @@ if (isset($_POST['login'])) {
             // Simpan data ke sesi
             $_SESSION['user_id'] = $data['id']; // Simpan ID pengguna untuk konsistensi
             $_SESSION['username'] = $data['username']; // Simpan nama pengguna jika perlu
+            $_SESSION["is_login"] = true;
             header('location: dashboard.php'); // Redirect ke dashboard
             exit;
         } else {

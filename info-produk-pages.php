@@ -1,5 +1,11 @@
 <?php
 include "CODES/BACKEND/db.php";
+session_start();
+
+if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== true) {
+    header("Location: index.php");
+    exit;
+    }
 
 $message;
 

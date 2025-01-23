@@ -2,6 +2,11 @@
 include "CODES/BACKEND/db.php";
 session_start();
 
+if (isset($_SESSION["is_login"])) {
+    header("location: dashboard.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
