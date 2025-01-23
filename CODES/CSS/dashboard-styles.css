@@ -838,7 +838,8 @@ footer .footer-bottom p {
 
 @media screen and (max-width: 600px){
     .gambar-produk{
-        height: 135px;
+        max-height: 145px;
+        min-height: 120px;
         margin-bottom: 3px;
         scale: 1.15;
     }

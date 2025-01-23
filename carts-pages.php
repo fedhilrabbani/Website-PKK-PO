@@ -7,6 +7,37 @@ if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== true) {
     header("Location: index.php");
     exit;
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Ambil data dari form
+        $id_produk = intval($_POST['id_produk']);
+        $quantity_total = intval($_POST['quantity_total']);
+        $nama_product = $_POST['nama_product'] ?? '';
+        $harga = floatval($_POST['harga']);
+        $gambar = $_POST['gambar'] ?? '';
+        $nama_gambar = $_POST['nama_gambar'] ?? '';
+    
+        // Debugging untuk memastikan data yang diterima
+        error_log("ID Produk: $id_produk, Quantity: $quantity_total, Nama Produk: $nama_product, Harga: $harga, Gambar: $gambar, Nama Gambar: $nama_gambar");
+    
+        // Validasi data
+        if ($id_produk > 0 && $quantity_total > 0 && !empty($nama_product)) {
+            // Simpan data ke tabel cart
+            $sql_cart = "INSERT INTO cart (id_product, nama_product, quantity_total, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt_cart = $db->prepare($sql_cart);
+            $stmt_cart->bind_param("isidss", $id_produk, $nama_product, $quantity_total, $harga, $gambar, $nama_gambar);
+    
+            if ($stmt_cart->execute()) {
+                // Redirect ke halaman cart setelah data berhasil dimasukkan
+                header("Location: carts-pages.php");
+                exit;
+            } else {
+                echo "Error: " . $stmt_cart->error;
+            }
+        } else {
+            echo "Invalid data.";
+        }
+    }
     
 $jumlahprodukcart;
 
@@ -19,18 +50,22 @@ if (isset($_GET['idproduk'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $produk = $result->fetch_assoc();
-
     if ($produk) {
         $sql_check = "SELECT * FROM cart WHERE id_product = ?";
         $stmt_check = $db->prepare($sql_check);
         $stmt_check->bind_param("i", $id);
         $stmt_check->execute();
         $result_check = $stmt_check->get_result();
-
+    
         if ($result_check->num_rows > 0) {
-            // echo "Produk sudah ada di keranjang.";
+            // Jika produk sudah ada di keranjang, tambahkan kuantitas
+            $sql_update_quantity = "UPDATE cart SET quantity_total = quantity_total + 1 WHERE id_product = ?";
+            $stmt_update_quantity = $db->prepare($sql_update_quantity);
+            $stmt_update_quantity->bind_param("i", $id);
+            $stmt_update_quantity->execute();
         } else {
-            $sql_cart = "INSERT INTO cart (id_product, nama_product, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?)";
+            // Jika produk belum ada di keranjang, tambahkan data baru
+            $sql_cart = "INSERT INTO cart (id_product, nama_product, harga, gambar, nama_gambar, quantity_total) VALUES (?, ?, ?, ?, ?, 1)";
             $stmt_cart = $db->prepare($sql_cart);
             $stmt_cart->bind_param("issss", $id, $produk['nama'], $produk['harga'], $produk['gambar'], $produk['nama_gambar']);
             $stmt_cart->execute();
@@ -55,6 +90,7 @@ if (!$result2) {
             'harga' => $row2['harga'],
             'url_gambar' => $row2['gambar'],
             'nama_gambar' => $row2['nama_gambar'],
+            'quantity_total' => $row2['quantity_total']
         ];
     }
 } else {
@@ -127,9 +163,30 @@ function processPreOrder($db, $username = null) {
 
             // Calculate total price and collect product names
             while ($row = $result_cart->fetch_assoc()) {
-                $total_price += $row['harga'];
+                $total_price += $row['harga'] * $row['quantity_total'];
                 $product_names[] = $row['nama_product'];
                 $total_quantity++;
+
+                // Get the current quantity of the product
+                $sql_quantity = "SELECT quantity FROM foods WHERE foods_id = ?";
+                $stmt_quantity = $db->prepare($sql_quantity);
+                $stmt_quantity->bind_param("i", $row['id_product']);
+                $stmt_quantity->execute();
+                $result_quantity = $stmt_quantity->get_result();
+                $quantity = $result_quantity->fetch_assoc()['quantity'];
+
+                // Check if enough quantity is available
+                if ($quantity < $row['quantity_total']) {
+                    echo "Stok tidak cukup untuk produk: " . $row['nama_product'];
+                    return; // Stop the process if quantity is insufficient
+                }
+
+                // Update the quantity in the foods table
+                $new_quantity = $quantity - $row['quantity_total'];
+                $sql_update_quantity = "UPDATE foods SET quantity = ? WHERE foods_id = ?";
+                $stmt_update_quantity = $db->prepare($sql_update_quantity);
+                $stmt_update_quantity->bind_param("ii", $new_quantity, $row['id_product']);
+                $stmt_update_quantity->execute();
             }
 
             $kelas = 'Tidak Diketahui';
@@ -153,7 +210,6 @@ function processPreOrder($db, $username = null) {
             $stmt_preorder = $db->prepare($sql_preorder);
             $stmt_preorder->bind_param("ssids", $username, $product_name_string, $total_quantity, $total_price, $kelas);
             $result = $stmt_preorder->execute();
-            
 
             if (!$result) {
                 echo "Execute failed: " . $stmt_preorder->error;
@@ -176,6 +232,7 @@ function processPreOrder($db, $username = null) {
         echo "Keranjang kosong. Tidak dapat melakukan pre-order.";
     }
 }
+
 
 // Check if session is started, if not start it
 if (session_status() == PHP_SESSION_NONE) {
@@ -232,9 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="dashboard.php" class="menu-link">
                         <i class="fas fa-home"></i>
                     </a>
-                    <a href="#" class="menu-link">
-                        <i class="fas fa-info"></i>
-                    </a>
                 </div>
             </div>
         </header>
@@ -252,27 +306,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="product-details">
                             <h3 class="nama-produk"><?=$produk['nama']?></h3>
-                            <p class="deskripsi-produk">Deskripsi singkat produk minuman</p>
-                            <p class="ukuran-porsi">Ukuran : [Ukuran]</p>
-                            <p class="tingkat-pedas">Suhu : [Suhu]</p>
-                            <p class="volume">Volume : [Volume]</p>
-                            <p class="tersedia">Tersedia : [Tersedia]</p>
-                            <p class="deskripsi-rasa">Deskripsi Rasa : [Deskripsi Rasa]</p>
-                            <p class="deskripsi-gizi">Deskripsi Gizi : [Deskripsi Gizi]</p>
-                            <p class="waktu-penyajian">Waktu Penyajian : [Waktu Penyajian]</p>
                         </div>
                         <div class="product-price">
                             <p>Rp. <span class="unit-price"><?php echo number_format($produk['harga'], 2, ',', '.') . '-.'; ?>
                             </span></p>
                         </div>
                         <div class="product-subtotal">
-                            <p>Rp <span class="subtotal-price"><?php echo number_format(100000, 2, ',', '.'), '-.'; ?></span></p>
+                            <p>Jumlah: <?= isset($produk['quantity_total']) ? $produk['quantity_total'] : 0 ?></p>
                         </div>
+
                         <div class="product-actions">
                             <a href="carts-pages.php?iddelete=<?=$produk['id']?>"><button class="remove-btn" data-id="1">Hapus</button></a>
-                            <label>
-                                <input type="checkbox" class="wishlist-checkbox" data-id="1"> Simpan ke Wishlist
-                            </label>
                         </div>
                     </div>
                 <?php } ?>
@@ -311,37 +355,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 <table>
                     <tr>
                         <td>Total Harga Barang</td>
-                        <td>Rp. <span id="totalPrice"><?php echo number_format(120000, 2, ',', '.'), '-.'; ?></span></td>
+                        <td>Rp. <span id="totalPrice">
+                            <?php
+                                $totalHarga = 0;
+                                foreach ($dataproduk as $produk) {
+                                    $totalHarga += $produk['harga'] * $produk['quantity_total'];
+                                }
+                                echo number_format($totalHarga, 2, ',', '.');
+                            ?>
+                        </span></td>
                     </tr>
                     <tr>
-                        <td>Biaya Pengiriman</td>
-                        <td>Rp. <span id="shippingFee"><?php echo number_format(20000, 2, ',', '.'), '-.'; ?></span></td>
-                    </tr>
-                    <tr>
-                        <td>Diskon</td>
-                        <td>Rp. <span id="discount"><?php echo number_format(10000, 2, ',', '.'), '-.'; ?></span></td>
-                    </tr>
-                    <tr>
-                        <td><b><i>Total Pembayaran</i></b></th>
-                        <td><b><i>Rp. <span id="grandTotal"><?php echo number_format(100000, 2, ',', '.'), '-.'; ?></span></i></b></th>
+                        <td><b><i>Total Pembayaran</i></b></td>
+                        <td><b><i>Rp. <span id="grandTotal">
+                            <?php
+                                // Anda bisa langsung menggunakan $totalHarga jika tidak ada biaya tambahan
+                                echo number_format($totalHarga, 2, ',', '.');
+                            ?>
+                        </span></i></b></td>
                     </tr>
                 </table>
-                <button class="checkout-btn">Lanjutkan ke Pembayaran</button>
+                <button class="checkout-btn" id="preOrder">Lanjutkan PreOrder</button>
             </div>
-            <footer>
-                <div class="total">
-                    <input type="checkbox" name="pilihSemua">
-                    <label for="pilihSemua" class="font-biasa">Pilih Semua</label>
-                    <table>
-                        <tr>
-                            <!-- total harga keranjang -->
-                            <td>Total :</td>
-                            <td>Rp. <?php echo number_format(150000, 2, ',', '.'), '-.'; ?></td>
-                        </tr>
-                    </table>
-                </div>
-                <button id="preOrder">Pre Order</button>
-            </footer>
         </div>
     </div>
 </body>

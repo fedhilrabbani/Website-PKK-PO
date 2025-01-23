@@ -47,6 +47,7 @@ if ($result->num_rows > 0) {
             'id' => $row['foods_id'],
             'url_gambar' => $row['gambar'],
             'nama_gambar' => $row['nama_gambar'],
+            'deskripsi' => $row['deskripsi'],
         ];
     }
     $_SESSION['list_makanan'] = $datamakanan;
