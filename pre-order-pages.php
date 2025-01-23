@@ -2,6 +2,11 @@
 include "CODES/BACKEND/db.php";
 session_start();
 
+if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== true) {
+    header("Location: index.php");
+    exit;
+    }
+
 // Pastikan pengguna login
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
