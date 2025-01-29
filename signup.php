@@ -10,7 +10,6 @@ if (isset($_SESSION["is_login"])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $email = $_POST['emailuser'];
     $kelas = $_POST['kelas'];
 
     $errors = [];
@@ -24,17 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $errors[] = "Username sudah digunakan.";
-    }
 
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 
-        $query = "INSERT INTO users (username, email, password, kelas) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO users (username, password, kelas) VALUES (?, ?, ?)";
         $stmt = $db->prepare($query);
-        $stmt->bind_param("ssss", $username, $email, $hashed_password, $kelas);
+        $stmt->bind_param("sss", $username, $hashed_password, $kelas);
 
         if ($stmt->execute()) {
             echo "<script>
@@ -61,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Lawak lu...',
+                    title: 'eror..',
                     html: '$error_message',
                     showConfirmButton: true,
                 });
@@ -83,9 +79,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="CODES/CSS/sign-up-pages-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="CODES/JS/login-register-scripts.js"></script>
+    <style>
+        .hidepw:hover {
+            cursor:pointer;
+        }
+    </style>
 </head>
 
-<body>
+<body style="background-image: url('assets/images/background-login-register.jpg');">
     <div class="container">
         <div class="welcome-container">
             <h1>Selamat Datang di Platform Kami !</h1>
@@ -96,28 +97,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="signup.php" method="POST">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" name="username" id="username" required>
+                    <input type="text" placeholder="Nama Lengkap" name="username" id="username" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-graduation-cap"></i>
-                    <input type="text" placeholder="Kelas" name="kelas" required>
+                    <input type="text" placeholder="Nama Kelas" name="kelas" required>
                 </div>
+                    <p style="margin:-10px 0 10px 0">(Ketik guru jika anda guru)</p>
                 <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email" name="emailuser" required>
+                    <input type="password" placeholder="Password" name="password" id="password" required>
+                    <i class="hidepw fas fa-eye toggle-password" id="togglePassword"></i>
                 </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" name="password" id="password" >
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-check-circle"></i>
-                    <input type="password" placeholder="Konfirmasi Password" id="checkpassword" required oninput="checkPassword()">
-                </div>
-                <button type="submit" class="button" name="signup" required onclick="confirmPassword()">Daftar</button>
+                <p style="margin:-10px 0 10px 0">Buat password yang mudah diingat!</p>
+                <button type="submit" class="button" name="signup" required>Daftar</button>
+                <a href="index.php"><button type="button" class="button" name="">Masuk</button></a>
             </form>
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
 
+        togglePassword.addEventListener('click', function () {
+            // Ubah tipe input antara 'password' dan 'text'
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Ubah ikon antara mata terbuka dan tertutup
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
 </html>

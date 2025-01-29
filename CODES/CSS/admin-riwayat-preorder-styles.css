@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #DCE7F4;
+    color: #003366;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003366;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.header .logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.header .logo-container img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.header .logo-container h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.header .menu {
+    display: flex;
+    gap: 15px;
+}
+
+.header .menu-link {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header .menu-link:hover {
+    color: #A9C9D3;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header-riwayat {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.daftar-riwayat {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.kartu-riwayat {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px;
+}
+
+.kartu-riwayat:last-child {
+    border-bottom: none;
+}
+
+.header-pesanan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.status-pesanan .status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: white;
+}
+
+.status-confirmed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-canceled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-detail {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-detail:hover {
+    background-color: #0056b3;
+}
+
+.pesan-kosong {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #666;
+}

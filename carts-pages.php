@@ -8,8 +8,25 @@ if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== true) {
     exit;
     }
 
+    function getProductStock($db, $product_id) {
+        $sql = "SELECT quantity FROM foods WHERE foods_id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['quantity'];
+        }
+        
+        return 0;
+    }
+    
+    // Modifikasi proses penambahan ke keranjang
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Ambil data dari form
+        // Pastikan username tersedia
+        $username = $_SESSION['username'] ?? 'Guest';
+    
         $id_produk = intval($_POST['id_produk']);
         $quantity_total = intval($_POST['quantity_total']);
         $nama_product = $_POST['nama_product'] ?? '';
@@ -17,22 +34,173 @@ if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== true) {
         $gambar = $_POST['gambar'] ?? '';
         $nama_gambar = $_POST['nama_gambar'] ?? '';
     
-        // Debugging untuk memastikan data yang diterima
-        error_log("ID Produk: $id_produk, Quantity: $quantity_total, Nama Produk: $nama_product, Harga: $harga, Gambar: $gambar, Nama Gambar: $nama_gambar");
+        // Dapatkan stok produk
+        $stock = getProductStock($db, $id_produk);
     
         // Validasi data
         if ($id_produk > 0 && $quantity_total > 0 && !empty($nama_product)) {
-            // Simpan data ke tabel cart
-            $sql_cart = "INSERT INTO cart (id_product, nama_product, quantity_total, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt_cart = $db->prepare($sql_cart);
-            $stmt_cart->bind_param("isidss", $id_produk, $nama_product, $quantity_total, $harga, $gambar, $nama_gambar);
+            // Periksa apakah produk sudah ada di keranjang user
+            $sql_check = "SELECT id_cart, quantity_total FROM cart WHERE username = ? AND id_product = ?";
+            $stmt_check = $db->prepare($sql_check);
+            $stmt_check->bind_param("si", $username, $id_produk);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
     
-            if ($stmt_cart->execute()) {
-                // Redirect ke halaman cart setelah data berhasil dimasukkan
-                header("Location: carts-pages.php");
-                exit;
+            if ($result_check->num_rows > 0) {
+                // Produk sudah ada di keranjang, update kuantitas
+                $existing_cart = $result_check->fetch_assoc();
+                $new_quantity = $existing_cart['quantity_total'] + $quantity_total;
+    
+                // Validasi stok maksimum
+                if ($new_quantity > $stock) {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Stok Tidak Mencukupi',
+                            text: 'Stok hanya tersedia $stock unit',
+                            confirmButtonText: 'Oke'
+                        });
+                        window.history.back();
+                    </script>";
+                    exit;
+                }
+    
+                $sql_update = "UPDATE cart SET quantity_total = ? WHERE username = ? AND id_product = ?";
+                $stmt_update = $db->prepare($sql_update);
+                $stmt_update->bind_param("isi", $new_quantity, $username, $id_produk);
+    
+                if ($stmt_update->execute()) {
+                    header("Location: carts-pages.php");
+                    exit;
+                } else {
+                    echo "Error updating cart: " . $stmt_update->error;
+                }
             } else {
-                echo "Error: " . $stmt_cart->error;
+                // Validasi stok untuk produk baru
+                if ($quantity_total > $stock) {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Stok Tidak Mencukupi',
+                            text: 'Stok hanya tersedia $stock unit',
+                            confirmButtonText: 'Oke'
+                        });
+                        window.history.back();
+                    </script>";
+                    exit;
+                }
+    
+                // Produk belum ada di keranjang, tambahkan produk baru
+                $sql_cart = "INSERT INTO cart (username, id_product, nama_product, quantity_total, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt_cart = $db->prepare($sql_cart);
+                $stmt_cart->bind_param("sississ", 
+                    $username, 
+                    $id_produk, 
+                    $nama_product, 
+                    $quantity_total, 
+                    $harga, 
+                    $gambar, 
+                    $nama_gambar
+                );
+    
+                if ($stmt_cart->execute()) {
+                    header("Location: carts-pages.php");
+                    exit;
+                } else {
+                    echo "Error adding to cart: " . $stmt_cart->error;
+                }
+            }
+        } else {
+            echo "Invalid data.";
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Pastikan username tersedia
+        $username = $_SESSION['username'] ?? 'Guest';
+    
+        $id_produk = intval($_POST['id_produk']);
+        $quantity_total = intval($_POST['quantity_total']);
+        $nama_product = $_POST['nama_product'] ?? '';
+        $harga = floatval($_POST['harga']);
+        $gambar = $_POST['gambar'] ?? '';
+        $nama_gambar = $_POST['nama_gambar'] ?? '';
+    
+        // Dapatkan stok produk
+        $stock = getProductStock($db, $id_produk);
+    
+        // Validasi data
+        if ($id_produk > 0 && $quantity_total > 0 && !empty($nama_product)) {
+            // Periksa apakah produk sudah ada di keranjang user
+            $sql_check = "SELECT id_cart, quantity_total FROM cart WHERE username = ? AND id_product = ?";
+            $stmt_check = $db->prepare($sql_check);
+            $stmt_check->bind_param("si", $username, $id_produk);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
+    
+            if ($result_check->num_rows > 0) {
+                // Produk sudah ada di keranjang, update kuantitas
+                $existing_cart = $result_check->fetch_assoc();
+                $new_quantity = $existing_cart['quantity_total'] + $quantity_total;
+    
+                // Validasi stok maksimum
+                if ($new_quantity > $stock) {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Stok Tidak Mencukupi',
+                            text: 'Stok hanya tersedia $stock unit',
+                            confirmButtonText: 'Oke'
+                        });
+                        window.history.back();
+                    </script>";
+                    exit;
+                }
+    
+                $sql_update = "UPDATE cart SET quantity_total = ? WHERE username = ? AND id_product = ?";
+                $stmt_update = $db->prepare($sql_update);
+                $stmt_update->bind_param("isi", $new_quantity, $username, $id_produk);
+    
+                if ($stmt_update->execute()) {
+                    header("Location: carts-pages.php");
+                    exit;
+                } else {
+                    echo "Error updating cart: " . $stmt_update->error;
+                }
+            } else {
+                // Validasi stok untuk produk baru
+                if ($quantity_total > $stock) {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Stok Tidak Mencukupi',
+                            text: 'Stok hanya tersedia $stock unit',
+                            confirmButtonText: 'Oke'
+                        });
+                        window.history.back();
+                    </script>";
+                    exit;
+                }
+    
+                // Produk belum ada di keranjang, tambahkan produk baru
+                $sql_cart = "INSERT INTO cart (username, id_product, nama_product, quantity_total, harga, gambar, nama_gambar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt_cart = $db->prepare($sql_cart);
+                $stmt_cart->bind_param("sississ", 
+                    $username, 
+                    $id_produk, 
+                    $nama_product, 
+                    $quantity_total, 
+                    $harga, 
+                    $gambar, 
+                    $nama_gambar
+                );
+    
+                if ($stmt_cart->execute()) {
+                    header("Location: carts-pages.php");
+                    exit;
+                } else {
+                    echo "Error adding to cart: " . $stmt_cart->error;
+                }
             }
         } else {
             echo "Invalid data.";
@@ -75,14 +243,15 @@ if (isset($_GET['idproduk'])) {
 
 $dataproduk = []; // Inisialisasi array kosong
 
-$sql2 = "SELECT * FROM cart";
-$result2 = $db->query($sql2);
+$username = $_SESSION['username'] ?? 'Guest';
 
-if (!$result2) {
-    // Jika query gagal
-    echo "Error: " . $db->error;
-} elseif ($result2->num_rows > 0) {
-    // Jika ada data dalam tabel cart
+$sql2 = "SELECT * FROM cart WHERE username = ?";
+$stmt2 = $db->prepare($sql2);
+$stmt2->bind_param("s", $username);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+
+if ($result2->num_rows > 0) {
     while ($row2 = $result2->fetch_assoc()) {
         $dataproduk[] = [
             'id' => $row2['id_product'],
@@ -98,7 +267,6 @@ if (!$result2) {
     echo "<p>Keranjang kosong.</p>";
 }
 
-
 if (!empty($dataproduk)) {
     foreach ($dataproduk as $produk) {
         // Render item cart
@@ -107,39 +275,82 @@ if (!empty($dataproduk)) {
     echo "<p>Keranjang kosong</p>";
 }
 
-$sqljumlah = "SELECT COUNT(id_cart) AS id FROM cart";
-$resultjumlah = $db->query($sqljumlah);
+// Sebelum proses pre-order atau sebelum redirect
+$_SESSION['previous_cart_quantities'] = [];
+
+// Query untuk mengambil data cart
+$sql_cart = "SELECT id_product, nama_product, quantity_total FROM cart";
+$result_cart = $db->query($sql_cart);
+
+if ($result_cart->num_rows > 0) {
+    while ($cart_item = $result_cart->fetch_assoc()) {
+        // Simpan ke session
+        $_SESSION['previous_cart_quantities'][$cart_item['id_product']] = [
+            'nama_product' => $cart_item['nama_product'],
+            'quantity_total' => $cart_item['quantity_total']
+        ];
+    }
+}
+
+$username = $_SESSION['username'] ?? 'Guest';
+$sqljumlah = "SELECT COUNT(id_cart) AS id FROM cart WHERE username = ?";
+$stmt_jumlah = $db->prepare($sqljumlah);
+$stmt_jumlah->bind_param("s", $username);
+$stmt_jumlah->execute();
+$resultjumlah = $stmt_jumlah->get_result();
 
 if ($resultjumlah->num_rows > 0) {
     $row = $resultjumlah->fetch_assoc();
-    $jumlahprodukcart = $row['id']; // Simpan jumlah ID ke dalam variabel
+    $jumlahprodukcart = $row['id']; 
 } else {
-    $jumlahprodukcart = 0; // Jika tabel kosong, jumlah ID adalah 0
+    $jumlahprodukcart = 0;
 }
 
 if (isset($_GET['iddelete'])) {
     $id_delete = intval($_GET['iddelete']);
-    $sqldelete = "DELETE FROM cart WHERE id_product = ?";
+    $username = $_SESSION['username'] ?? 'Guest';
+    
+    $sqldelete = "DELETE FROM cart WHERE id_product = ? AND username = ?";
     $stmt_delete = $db->prepare($sqldelete);
-    $stmt_delete->bind_param("i", $id_delete);
+    $stmt_delete->bind_param("is", $id_delete, $username);
     $stmt_delete->execute();
-    $stmt_delete->close();
     
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
-
 }
 
 function processPreOrder($db, $username = null) {
     // Debugging: Check database connection
+    $sql_check_cart = "SELECT COUNT(*) as cart_count FROM cart";
+    $result_check_cart = $db->query($sql_check_cart);
+    $cart_count = $result_check_cart->fetch_assoc()['cart_count'];
+
+    if ($cart_count == 0) {
+        // Tampilkan pesan kesalahan jika keranjang kosong
+        echo "<script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Keranjang Kosong',
+                text: 'Silakan tambahkan produk ke keranjang terlebih dahulu',
+                confirmButtonText: 'Oke'
+            }).then(() => {     
+                window.location.href = 'carts-pages.php';
+            });
+        </script>";
+        exit();
+    }
+
     if (!$db) {
         echo "Database connection error!";
         return;
     }
 
     // Retrieve cart items
-    $sql_cart = "SELECT * FROM cart";
-    $result_cart = $db->query($sql_cart);
+    $sql_cart = "SELECT * FROM cart WHERE username = ?";
+    $stmt_cart = $db->prepare($sql_cart);
+    $stmt_cart->bind_param("s", $username);
+    $stmt_cart->execute();
+    $result_cart = $stmt_cart->get_result();
     
     if (!$result_cart) {
         echo "Error fetching cart items: " . $db->error;
@@ -165,8 +376,8 @@ function processPreOrder($db, $username = null) {
             while ($row = $result_cart->fetch_assoc()) {
                 $total_price += $row['harga'] * $row['quantity_total'];
                 $product_names[] = $row['nama_product'];
-                $total_quantity++;
-
+                $total_quantity += $row['quantity_total']; // Menghitung total kuantitas dari setiap produk
+            
                 // Get the current quantity of the product
                 $sql_quantity = "SELECT quantity FROM foods WHERE foods_id = ?";
                 $stmt_quantity = $db->prepare($sql_quantity);
@@ -174,13 +385,13 @@ function processPreOrder($db, $username = null) {
                 $stmt_quantity->execute();
                 $result_quantity = $stmt_quantity->get_result();
                 $quantity = $result_quantity->fetch_assoc()['quantity'];
-
+            
                 // Check if enough quantity is available
                 if ($quantity < $row['quantity_total']) {
                     echo "Stok tidak cukup untuk produk: " . $row['nama_product'];
                     return; // Stop the process if quantity is insufficient
                 }
-
+            
                 // Update the quantity in the foods table
                 $new_quantity = $quantity - $row['quantity_total'];
                 $sql_update_quantity = "UPDATE foods SET quantity = ? WHERE foods_id = ?";
@@ -257,15 +468,62 @@ if (isset($_POST['submit_preorder'])) {
 document.addEventListener('DOMContentLoaded', function() {
     const preOrderButton = document.getElementById('preOrder');
     const preOrderForm = document.getElementById('preOrderForm');
+    const cartItems = document.querySelector('.cart-item-list');
     
+    function isCartEmpty() {
+        return cartItems.children.length === 0;
+    }
+
     if (preOrderButton && preOrderForm) {
         preOrderButton.addEventListener('click', function(e) {
             e.preventDefault();
-            preOrderForm.submit();
+
+            // Cek jika keranjang kosong
+            if (isCartEmpty()) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Keranjang Kosong',
+                    text: 'Silakan tambahkan produk ke keranjang terlebih dahulu',
+                    confirmButtonText: 'Oke'
+                });
+                return;
+            }
+
+            // Konfirmasi Pre-Order
+            Swal.fire({
+                icon: 'question',
+                title: 'Konfirmasi Pre-Order',
+                html: `
+                    <p>Apakah Anda yakin ingin melakukan pre-order?</p>
+                    <strong>Perhatian: Pre-order tidak dapat dibatalkan setelah diproses!</strong>
+                `,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan',
+                cancelButtonText: 'Kembali',
+                customClass: {
+                    popup: 'my-custom-popup-class',
+                    content: 'my-custom-content-class'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Tampilkan loading
+                    Swal.fire({
+                        title: 'Memproses Pre-Order',
+                        text: 'Harap tunggu...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            // Submit form
+                            preOrderForm.submit();
+                        }
+                    });
+                }
+            });
         });
     }
 });
-
 </script>
 
 <!DOCTYPE html>
@@ -277,14 +535,15 @@ document.addEventListener('DOMContentLoaded', function() {
     <link rel="stylesheet" href="CODES/CSS/carts-pages-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="CODES/JS/carts-pages.js"></script>
-    <title>Keranjang Jajan Yuk !</title>
+    <title>Keranjang Marketopia !</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="container">
         <header>
             <div class="kontainer-header">
-                <img class="logo" src="ASSETS/IMAGES/icon.png" alt="Logo">
+                <img class="logo" src="assets/images/icon.png" alt="Logo">
                 <div class="menu-icons">
                     <a href="dashboard.php" class="menu-link">
                         <i class="fas fa-home"></i>
