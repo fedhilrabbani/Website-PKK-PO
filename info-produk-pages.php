@@ -157,10 +157,11 @@ function processPreOrderDirect($db, $username, $product_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informasi Jajan Yuk !</title>
     <link rel="stylesheet" href="CODES/CSS/info-produk-styles.css">
-    <link rel="shortcut icon" href="ASSETS/IMAGES/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/icon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="CODES/JS/info-produk-scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="container">
         <header>
             <div class="kontainer-header">
-                <img class="logo" src="ASSETS/IMAGES/icon.png" alt="Logo">
+                <img class="logo" src="assets/images/icon.png" alt="Logo">
                 <div class="menu-icons">
                     <a href="dashboard.php" class="menu-link">
                         <i class="fas fa-home"></i>
@@ -257,14 +258,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const minusButtons = document.querySelectorAll('.minus-btn');
     const plusButtons = document.querySelectorAll('.plus-btn');
     const quantityInputs = document.querySelectorAll('.quantity-input');
+    const addToCartButton = document.getElementById('addToCart');
+    const cartForm = document.getElementById('cartForm');
+    const hiddenQuantityInput = document.getElementById('hiddenQuantityInput');
+
+    // Ambil stok dari PHP
+    const availableStock = <?= intval($stock) ?>;
 
     const updateQuantity = (inputElement, increment) => {
         let currentQuantity = parseInt(inputElement.value) || 0;
-        currentQuantity += increment;
-        currentQuantity = Math.max(1, currentQuantity); // Prevent quantity from being less than 1
-        inputElement.value = currentQuantity;
+        let newQuantity = currentQuantity + increment;
+
+        // Batasi quantity antara 1 dan stok yang tersedia
+        if (newQuantity >= 1 && newQuantity <= availableStock) {
+            inputElement.value = newQuantity;
+        } else {
+            // Tampilkan peringatan jika melebihi stok
+            if (newQuantity > availableStock) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Stok Terbatas',
+                    text: `Maaf, stok hanya tersedia ${availableStock} unit`,
+                    confirmButtonText: 'Oke'
+                });
+                inputElement.value = availableStock;
+            }
+        }
     };
 
+    // Tambahkan event listener untuk tombol minus dan plus
     minusButtons.forEach((button, index) => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
@@ -278,6 +300,65 @@ document.addEventListener('DOMContentLoaded', function () {
             updateQuantity(quantityInputs[index], 1);
         });
     });
+
+    // Tambahkan event listener untuk input langsung
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            let inputValue = parseInt(this.value) || 0;
+            
+            // Jika input melebihi stok
+            if (inputValue > availableStock) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Stok Terbatas',
+                    text: `Maaf, stok hanya tersedia ${availableStock} unit`,
+                    confirmButtonText: 'Oke'
+                });
+                this.value = availableStock;
+            } 
+            
+            // Jika input kurang dari 1
+            if (inputValue < 1) {
+                this.value = 1;
+            }
+        });
+    });
+
+    // Event listener untuk tombol tambah ke keranjang
+    if (addToCartButton && cartForm && hiddenQuantityInput) {
+        addToCartButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const quantityValue = parseInt(quantityInputs[0].value, 10) || 1;
+            
+            // Validasi ulang sebelum submit
+            if (quantityValue > availableStock) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Stok Terbatas',
+                    text: `Maaf, stok hanya tersedia ${availableStock} unit`,
+                    confirmButtonText: 'Oke'
+                });
+                quantityInputs[0].value = availableStock;
+                return;
+            }
+
+            // Konfirmasi sebelum menambahkan ke keranjang
+            Swal.fire({
+                icon: 'question',
+                title: 'Tambah ke Keranjang',
+                text: `Tambahkan ${quantityValue} ${nama} ke keranjang?`,
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Tambahkan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    hiddenQuantityInput.value = quantityValue;
+                    cartForm.submit();
+                }
+            });
+        });
+    }
 });
 </script>
 <script>
